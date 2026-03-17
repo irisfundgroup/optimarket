@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight } from 'lucide-react';
+import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight, MessageCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { t, LANGUAGES, getStoredLang, setStoredLang } from '@/lib/i18n';
@@ -139,5 +139,3 @@ export default function Profile() {
     </div>
   );
 }
-
-import { MessageCircle } from 'lucide-react';
