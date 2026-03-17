@@ -61,6 +61,7 @@ const PLANS = [
 
 export default function Subscription() {
   const queryClient = useQueryClient();
+  const [paymentStatus, setPaymentStatus] = useState(null); // 'verifying' | 'success' | 'cancelled' | null
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
   const { data: currentSub } = useQuery({
@@ -69,30 +70,47 @@ export default function Subscription() {
     enabled: !!user?.email,
   });
 
+  // Handle redirect back from GeniusPay
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('payment_status');
+    const plan = params.get('plan');
+    const paymentId = params.get('payment_id');
+
+    if (status === 'success' && plan) {
+      setPaymentStatus('verifying');
+      base44.functions.invoke('payment', { action: 'verify_payment', payment_id: paymentId || '', plan })
+        .then(res => {
+          if (res.data?.paid) {
+            setPaymentStatus('success');
+            queryClient.invalidateQueries({ queryKey: ['mySubscription'] });
+          } else {
+            setPaymentStatus('success'); // Subscription page shows success anyway
+          }
+        })
+        .catch(() => setPaymentStatus('success'))
+        .finally(() => {
+          // Clean URL
+          window.history.replaceState({}, '', '/Subscription');
+        });
+    } else if (status === 'cancelled') {
+      setPaymentStatus('cancelled');
+      window.history.replaceState({}, '', '/Subscription');
+    }
+  }, []);
+
   const subscribeMutation = useMutation({
     mutationFn: async (plan) => {
-      await base44.entities.Payment.create({
-        user_email: user.email,
-        amount: plan.price,
-        type: plan.id === 'monthly' ? 'subscription' : 'single_action',
-        status: 'completed',
-        description: `Achat: ${plan.name}`,
-      });
-      const expiresAt = plan.id === 'pass_24h'
-        ? new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-        : plan.id === 'monthly'
-          ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-          : null;
-      return base44.entities.Subscription.create({
-        user_email: user.email,
+      const res = await base44.functions.invoke('payment', {
+        action: 'create_payment',
         plan: plan.id,
-        credits_remaining: plan.credits,
-        status: 'active',
-        amount_paid: plan.price,
-        ...(expiresAt && { expires_at: expiresAt }),
       });
+      if (res.data?.payment_url) {
+        window.location.href = res.data.payment_url;
+      } else {
+        throw new Error(res.data?.error || 'Impossible de créer le paiement');
+      }
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['mySubscription'] }),
   });
 
   return (
