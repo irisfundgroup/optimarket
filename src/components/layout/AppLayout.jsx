@@ -128,13 +128,7 @@ export default function AppLayout() {
           borderBottom: '1px solid rgba(245, 158, 11, 0.1)',
         }}>
         <Link to="/Home" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', boxShadow: '0 0 12px rgba(245,158,11,0.35)' }}>
-            <Zap className="w-4 h-4 text-white" />
-          </div>
-          <span className="text-base font-black" style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            OptiMarket
-          </span>
+          <img src="https://media.base44.com/images/public/69b89fb850f8b3d28e9e4bf6/6c0cb9dce_generated_image.png" alt="OptiMarket" className="h-8 w-auto" />
         </Link>
         <div className="flex items-center gap-1">
           <Link to="/Alerts" className="relative p-2" style={{ color: '#64748b' }}>
