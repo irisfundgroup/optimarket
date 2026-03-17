@@ -32,7 +32,7 @@ export default function OpportunityDetail() {
   });
   const { data: subscription } = useQuery({
     queryKey: ['mySubscription', user?.email],
-    queryFn: () => base44.entities.Subscription.filter({ user_email: user?.email, status: 'active' }, '-created_date', 1).then(r => r[0]),
+    queryFn: () => base44.entities.Subscription.filter({ user_email: user?.email, status: 'active' }, '-created_date', 1).then(r => r[0] || null),
     enabled: !!user?.email,
   });
 
