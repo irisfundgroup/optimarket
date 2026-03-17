@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Crown, Check, Zap, Lock, CreditCard, Flame, ArrowRight, Star } from 'lucide-react';
+import { Crown, Check, Lock, CreditCard, ArrowRight, Loader2, CheckCircle2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { t } from '@/lib/i18n';
