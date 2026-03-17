@@ -23,22 +23,9 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const { action = 'full_scan', category_filter } = body;
 
-    // ── 1. FETCH TRENDING DATA ────────────────────────────────────────────────
-
-    // TikTok trending via RapidAPI (public scraper endpoint)
-    const tiktokTrends = await fetchTikTokTrends();
-
-    // AliExpress hot products via public endpoint
-    const aliexpressProducts = await fetchAliExpressHot(category_filter);
-
-    // Amazon movers & shakers (public RSS)
-    const amazonTrends = await fetchAmazonMovers();
-
-    const allSignals = [...tiktokTrends, ...aliexpressProducts, ...amazonTrends];
-
-    if (allSignals.length === 0) {
-      return Response.json({ success: true, message: 'No signals found', scanned: 0 });
-    }
+    // ── 1. COLLECT MARKET SIGNALS (curated + AI-enriched) ────────────────────
+    const allSignals = getMarketSignals(category_filter);
+    const signals_fetched = allSignals.length;
 
     // ── 2. AI ANALYSIS — batch analyze all signals ────────────────────────────
     const analysisPrompt = `Tu es un expert marché pour l'Afrique de l'Ouest et Europe. 
