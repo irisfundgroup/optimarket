@@ -28,6 +28,7 @@ import ServiceRequests from '@/pages/ServiceRequests';
 import Favorites from '@/pages/Favorites';
 import Onboarding from '@/pages/Onboarding';
 import ApiDashboard from '@/pages/ApiDashboard';
+import LiveScanner from '@/pages/LiveScanner';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -79,6 +80,7 @@ const AuthenticatedApp = () => {
         <Route path="/ServiceRequests" element={<ServiceRequests />} />
         <Route path="/Favorites" element={<Favorites />} />
         <Route path="/ApiDashboard" element={<ApiDashboard />} />
+        <Route path="/LiveScanner" element={<LiveScanner />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
