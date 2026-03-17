@@ -1,76 +1,116 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Zap, TrendingUp, ShoppingBag, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { t } from '@/lib/i18n';
+import { Search, Zap, TrendingUp, ShoppingBag, MapPin, Sparkles } from 'lucide-react';
 import StatsBar from './StatsBar';
 
 export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
   return (
-    <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
-      {/* Animated blobs */}
+    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #060c18 0%, #0a1628 50%, #060c18 100%)' }}>
+      {/* Animated orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 left-1/4 w-80 h-80 bg-orange-500 rounded-full blur-[120px] opacity-15 animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[140px] opacity-10" />
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-10" />
+        <div className="absolute -top-32 left-1/3 w-96 h-96 rounded-full animate-pulse"
+          style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.18) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+        <div className="absolute top-1/2 -right-20 w-80 h-80 rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', filter: 'blur(50px)' }} />
+        <div className="absolute -bottom-20 left-0 w-72 h-72 rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.1) 0%, transparent 70%)', filter: 'blur(40px)' }} />
       </div>
 
       {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 grid-pattern opacity-100" />
 
-      <div className="relative px-4 md:px-8 py-12 md:py-20 max-w-6xl mx-auto">
-        <div className="text-center mb-8">
+      {/* Top border glow */}
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)' }} />
+
+      <div className="relative px-4 md:px-8 py-14 md:py-24 max-w-6xl mx-auto">
+        <div className="text-center mb-10">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-orange-500/15 border border-orange-500/30 rounded-full px-4 py-1.5 mb-5">
-            <Zap className="w-3.5 h-3.5 text-orange-400" />
-            <span className="text-orange-300 text-xs font-semibold tracking-wide uppercase">Propulsé par l'IA</span>
+          <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
+            style={{
+              background: 'rgba(245,158,11,0.1)',
+              border: '1px solid rgba(245,158,11,0.3)',
+            }}>
+            <Sparkles className="w-3.5 h-3.5" style={{ color: '#f59e0b' }} />
+            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#fbbf24' }}>
+              Intelligence Artificielle · Non-Stop
+            </span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight">
-            {t('welcome')}{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500">
-              OptiMarket
+          {/* Headline */}
+          <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4">
+            <span className="text-white">Le Marché</span>
+            <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fcd34d 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              Intelligent
             </span>
           </h1>
-          <p className="text-slate-400 mt-4 text-base md:text-xl max-w-2xl mx-auto leading-relaxed">
-            {t('tagline')} — Marketplace · IA · Ventes Flash · Géolocalisation
+          <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#64748b' }}>
+            Opportunités IA · Ventes Flash · Marketplace · Géolocalisation
           </p>
         </div>
 
-        {/* Search bar */}
-        <div className="max-w-2xl mx-auto mb-6">
-          <div className="flex items-center bg-white/10 backdrop-blur-xl rounded-2xl border border-white/15 p-2 shadow-2xl shadow-black/20">
-            <Search className="w-5 h-5 text-slate-400 mx-3 flex-shrink-0" />
+        {/* Search */}
+        <div className="max-w-2xl mx-auto mb-8">
+          <div className="flex items-center rounded-2xl p-1.5 shadow-2xl"
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(245,158,11,0.2)',
+              boxShadow: '0 0 40px rgba(245,158,11,0.08), inset 0 1px 0 rgba(255,255,255,0.05)',
+            }}>
+            <Search className="w-5 h-5 mx-3 flex-shrink-0" style={{ color: '#475569' }} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && onSearch()}
-              placeholder={t('search')}
-              className="flex-1 bg-transparent text-white placeholder-slate-400 outline-none text-sm py-3"
+              placeholder="Rechercher produits, services, opportunités..."
+              className="flex-1 bg-transparent outline-none text-sm py-3"
+              style={{ color: '#e2e8f0', caretColor: '#f59e0b' }}
             />
             <div className="flex items-center gap-2 px-2">
-              <button className="flex items-center gap-1.5 text-slate-400 hover:text-orange-400 text-xs transition-colors px-2">
-                <MapPin className="w-4 h-4" /> Localiser
+              <button className="flex items-center gap-1 text-xs transition-colors px-2 py-1 rounded-lg"
+                style={{ color: '#475569' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#f59e0b'}
+                onMouseLeave={e => e.currentTarget.style.color = '#475569'}>
+                <MapPin className="w-3.5 h-3.5" /> Localiser
               </button>
-              <Button onClick={onSearch} size="sm" className="bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 text-white rounded-xl px-5 h-9 font-semibold">
+              <button onClick={onSearch}
+                className="text-sm font-bold px-5 py-2.5 rounded-xl text-white transition-all"
+                style={{
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  boxShadow: '0 4px 15px rgba(245,158,11,0.35)',
+                }}>
                 Rechercher
-              </Button>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Quick links */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex flex-wrap justify-center gap-2.5 mb-10">
           {[
-            { to: '/Products', icon: ShoppingBag, label: t('products'), color: 'hover:border-blue-500/50' },
-            { to: '/FlashSales', icon: Zap, label: t('flash_sales'), color: 'hover:border-orange-500/50', highlight: true },
-            { to: '/Opportunities', icon: TrendingUp, label: t('opportunities'), color: 'hover:border-emerald-500/50' },
+            { to: '/Products', icon: ShoppingBag, label: 'Produits', color: 'rgba(99,102,241,0.15)', border: 'rgba(99,102,241,0.3)', text: '#a5b4fc' },
+            { to: '/FlashSales', icon: Zap, label: 'Ventes Flash', color: 'rgba(245,158,11,0.15)', border: 'rgba(245,158,11,0.4)', text: '#fbbf24', glow: true },
+            { to: '/Opportunities', icon: TrendingUp, label: 'Opportunités IA', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#6ee7b7' },
           ].map((item, i) => (
             <Link key={i} to={item.to}>
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium transition-all hover:bg-white/10 ${item.color} ${item.highlight ? 'border-orange-500/30 bg-orange-500/10' : ''}`}>
-                <item.icon className={`w-4 h-4 ${item.highlight ? 'text-orange-400' : 'text-slate-400'}`} />
+              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                style={{
+                  background: item.color,
+                  border: `1px solid ${item.border}`,
+                  color: item.text,
+                  boxShadow: item.glow ? '0 0 20px rgba(245,158,11,0.15)' : 'none',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 8px 25px ${item.color}`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = item.glow ? '0 0 20px rgba(245,158,11,0.15)' : 'none'; }}
+              >
+                <item.icon className="w-4 h-4" />
                 {item.label}
               </div>
             </Link>
@@ -82,6 +122,10 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
           <StatsBar />
         </div>
       </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-16"
+        style={{ background: 'linear-gradient(to bottom, transparent, #060c18)' }} />
     </section>
   );
 }
