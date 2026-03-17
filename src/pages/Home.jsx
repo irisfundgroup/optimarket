@@ -57,7 +57,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen" style={{ background: '#060c18' }}>
       <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 space-y-12">
