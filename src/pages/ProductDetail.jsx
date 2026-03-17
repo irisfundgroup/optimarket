@@ -138,15 +138,26 @@ export default function ProductDetail() {
           <p className="text-sm text-slate-600">{product.seller_name || product.seller_email}</p>
         </div>
 
+        {paymentStatus === 'success' && (
+          <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-emerald-700 text-sm">
+            <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> Paiement confirmé ! Le vendeur a été notifié.
+          </div>
+        )}
+        {paymentStatus === 'cancelled' && (
+          <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3 text-red-700 text-sm">
+            <XCircle className="w-4 h-4 flex-shrink-0" /> Paiement annulé.
+          </div>
+        )}
+
         <div className="flex gap-3 pt-2">
-          <Button className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-xl gap-2" onClick={handleContact}>
-            <MessageCircle className="w-4 h-4" /> {t('contact')}
+          <Button className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-xl gap-2" onClick={() => buyMutation.mutate()} disabled={buyMutation.isPending}>
+            {buyMutation.isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Redirection...</> : <><ShoppingCart className="w-4 h-4" /> Acheter</>}
+          </Button>
+          <Button variant="outline" className="rounded-xl gap-2" onClick={handleContact}>
+            <MessageCircle className="w-4 h-4" />
           </Button>
           <Button variant="outline" className="rounded-xl" onClick={() => favMutation.mutate()}>
             <Heart className="w-4 h-4" />
-          </Button>
-          <Button variant="outline" className="rounded-xl">
-            <Share2 className="w-4 h-4" />
           </Button>
         </div>
       </div>
