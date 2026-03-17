@@ -207,11 +207,11 @@ export default function AppLayout() {
         }}>
         <div className="flex items-center justify-around px-2 h-16">
           {[
-            { path: '/Home', icon: Home, label: 'Accueil' },
-            { path: '/Products', icon: ShoppingBag, label: 'Produits' },
-            { path: '/FlashSales', icon: Zap, label: 'Flash', highlight: true },
-            { path: '/Messages', icon: MessageCircle, label: 'Messages' },
-            { path: '/Profile', icon: User, label: 'Profil' },
+            { path: '/Home', icon: Home, labelKey: 'home' },
+            { path: '/Products', icon: ShoppingBag, labelKey: 'products' },
+            { path: '/FlashSales', icon: Zap, labelKey: 'flash_sales', highlight: true },
+            { path: '/Messages', icon: MessageCircle, labelKey: 'messages' },
+            { path: '/Profile', icon: User, labelKey: 'profile' },
           ].map(item => (
             <Link key={item.path} to={item.path}
               className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all">
@@ -230,7 +230,7 @@ export default function AppLayout() {
                 <>
                   <item.icon className="w-5 h-5 transition-colors" style={{ color: isActive(item.path) ? '#fbbf24' : '#475569' }} />
                   <span className="text-[10px] font-medium transition-colors" style={{ color: isActive(item.path) ? '#fbbf24' : '#475569' }}>
-                    {item.label}
+                     {t(item.labelKey)}
                   </span>
                 </>
               )}
