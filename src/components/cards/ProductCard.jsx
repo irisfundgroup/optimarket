@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Eye, Crown } from 'lucide-react';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 const CATEGORY_COLORS = {
   electronics: { bg: 'rgba(99,102,241,0.15)', text: '#a5b4fc' },
@@ -14,8 +16,10 @@ const CATEGORY_COLORS = {
 };
 
 export default function ProductCard({ product }) {
+  const { currency } = useCurrency();
   const img = product.images?.[0] || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80';
   const cat = CATEGORY_COLORS[product.category] || CATEGORY_COLORS.other;
+  const convertedPrice = convertPrice(product.price, product.currency || 'EUR', currency);
 
   return (
     <Link to={`/ProductDetail?id=${product.id}`} className="group block">
@@ -57,7 +61,7 @@ export default function ProductCard({ product }) {
           <div className="absolute bottom-0 left-0 right-0 pt-8 pb-2.5 px-3"
             style={{ background: 'linear-gradient(to top, rgba(6,12,24,0.9), transparent)' }}>
             <span className="font-black text-lg" style={{ color: '#fbbf24' }}>
-              {product.price?.toLocaleString('fr-FR')} <span className="text-xs font-medium opacity-70">{product.currency || 'EUR'}</span>
+              {convertedPrice.toLocaleString('fr-FR')} <span className="text-xs font-medium opacity-70">{CURRENCY_SYMBOLS[currency]}</span>
             </span>
           </div>
         </div>
