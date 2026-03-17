@@ -92,12 +92,18 @@ export default function Profile() {
             <span className="font-medium text-sm">{t('language')}</span>
           </div>
           <Select value={getStoredLang()} onValueChange={handleLangChange}>
-            <SelectTrigger className="w-40 rounded-xl">
+            <SelectTrigger className="w-48 rounded-xl">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="max-h-72">
               {LANGUAGES.map(l => (
-                <SelectItem key={l.code} value={l.code}>{l.flag} {l.label}</SelectItem>
+                <SelectItem key={l.code} value={l.code}>
+                  <span className="flex items-center gap-2">
+                    <span>{l.flag}</span>
+                    <span>{l.label}</span>
+                    {l.region && <span className="text-slate-400 text-[10px] ml-1">({l.region})</span>}
+                  </span>
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
