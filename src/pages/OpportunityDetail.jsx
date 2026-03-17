@@ -23,6 +23,7 @@ export default function OpportunityDetail() {
   const [unlocked, setUnlocked] = useState(false);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
   const { data: opportunity, isLoading } = useQuery({
@@ -151,7 +152,14 @@ export default function OpportunityDetail() {
               <Share2 className="w-4 h-4" /> Partager
             </Button>
             {!needsUnlock && (
-              <Button className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white gap-2 flex-1">
+              <Button className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white gap-2 flex-1"
+                onClick={() => {
+                  if (opportunity.related_product_id) navigate(`/ProductDetail?id=${opportunity.related_product_id}`);
+                  else if (opportunity.related_service_id) navigate(`/ServiceDetail?id=${opportunity.related_service_id}`);
+                  else if (opportunity.type === 'flash_sale') navigate('/FlashSales');
+                  else if (opportunity.type === 'service_demand') navigate('/ServiceRequests');
+                  else navigate('/Products');
+                }}>
                 <TrendingUp className="w-4 h-4" /> Saisir l'opportunité
               </Button>
             )}
