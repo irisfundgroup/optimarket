@@ -92,13 +92,13 @@ export default function Home() {
           </div>
           {loadingFlash ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-52 rounded-2xl" />)}
+              {Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-52 rounded-2xl" style={{ background: 'rgba(255,255,255,0.05)' }} />)}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {flashSales.map(sale => <FlashSaleCard key={sale.id} sale={sale} />)}
               {flashSales.length === 0 && (
-                <div className="col-span-full flex flex-col items-center gap-3 py-10 text-slate-400">
+                <div className="col-span-full flex flex-col items-center gap-3 py-10" style={{ color: '#334155' }}>
                   <Zap className="w-10 h-10 opacity-30" />
                   <p className="text-sm">{t('no_results')}</p>
                 </div>
