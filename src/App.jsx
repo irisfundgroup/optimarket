@@ -26,6 +26,7 @@ import OpportunityDetail from '@/pages/OpportunityDetail';
 import FlashSaleDetail from '@/pages/FlashSaleDetail';
 import ServiceRequests from '@/pages/ServiceRequests';
 import Favorites from '@/pages/Favorites';
+import Onboarding from '@/pages/Onboarding';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -55,6 +56,7 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/Home" replace />} />
+      <Route path="/Onboarding" element={<Onboarding />} />
       <Route element={<AppLayout />}>
         <Route path="/Home" element={<Home />} />
         <Route path="/Products" element={<Products />} />
