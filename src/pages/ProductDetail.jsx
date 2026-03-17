@@ -12,6 +12,7 @@ export default function ProductDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
   const queryClient = useQueryClient();
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
 
@@ -22,6 +23,15 @@ export default function ProductDetail() {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('payment_status');
+    if (status) {
+      setPaymentStatus(status);
+      window.history.replaceState({}, '', `/ProductDetail?id=${id}`);
+    }
+  }, []);
 
   const handleContact = async () => {
     if (!product) return;
