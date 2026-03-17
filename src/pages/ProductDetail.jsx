@@ -48,6 +48,24 @@ export default function ProductDetail() {
     navigate('/Messages');
   };
 
+  const buyMutation = useMutation({
+    mutationFn: async () => {
+      const res = await base44.functions.invoke('payment', {
+        action: 'buy_item',
+        item_type: 'product',
+        item_id: product.id,
+        item_title: product.title,
+        amount: product.price,
+        currency: product.currency || 'XOF',
+      });
+      if (res.data?.payment_url) {
+        window.location.href = res.data.payment_url;
+      } else {
+        throw new Error(res.data?.error || 'Erreur de paiement');
+      }
+    },
+  });
+
   const favMutation = useMutation({
     mutationFn: () => base44.entities.Favorite.create({
       user_email: user?.email,
