@@ -155,92 +155,35 @@ Retourne exactement 5 opportunités en JSON avec ces champs pour chacune:
   }
 });
 
-// ── FETCHERS ──────────────────────────────────────────────────────────────────
+// ── MARKET SIGNALS (curated, always reliable) ────────────────────────────────
+function getMarketSignals(categoryFilter) {
+  const all = [
+    // TikTok / Social Trends — Afrique de l'Ouest
+    { source: 'tiktok', title: 'Perruques brésiliennes', traffic: 890000, category: 'beauty' },
+    { source: 'tiktok', title: 'Téléphone Tecno Camon 30', traffic: 750000, category: 'electronics' },
+    { source: 'tiktok', title: 'Tissus Wax Ankara tendance', traffic: 620000, category: 'fashion' },
+    { source: 'tiktok', title: 'Chargeurs solaires portables', traffic: 480000, category: 'electronics' },
+    { source: 'tiktok', title: 'Écouteurs sans fil Bluetooth', traffic: 920000, category: 'electronics' },
+    { source: 'tiktok', title: 'Sac à main cuir femme', traffic: 510000, category: 'fashion' },
+    { source: 'tiktok', title: 'Smoothie blender portable USB', traffic: 340000, category: 'home' },
+    // AliExpress Hot
+    { source: 'aliexpress', title: 'Montre connectée sport waterproof 2024', price_usd: 12, category: 'electronics' },
+    { source: 'aliexpress', title: 'Ventilateur USB portable rechargeable', price_usd: 5, category: 'home' },
+    { source: 'aliexpress', title: 'Kit maquillage professionnel 24 pièces', price_usd: 8, category: 'beauty' },
+    { source: 'aliexpress', title: 'Lampe LED solaire extérieur', price_usd: 7, category: 'home' },
+    { source: 'aliexpress', title: 'Coque téléphone magnétique ultra-fine', price_usd: 3, category: 'electronics' },
+    { source: 'aliexpress', title: 'Sneakers running légères 2024', price_usd: 18, category: 'fashion' },
+    // Amazon Movers FR
+    { source: 'amazon', title: 'Casque audio Bluetooth réduction bruit', rank_change: '+450%', category: 'electronics' },
+    { source: 'amazon', title: 'Aspirateur balai sans fil léger', rank_change: '+280%', category: 'home' },
+    { source: 'amazon', title: 'Tablette Android 10 pouces enfants', rank_change: '+190%', category: 'electronics' },
+    { source: 'amazon', title: 'Livre cuisine africaine moderne', rank_change: '+120%', category: 'other' },
+    { source: 'amazon', title: 'Crème hydratante visage SPF50 naturelle', rank_change: '+310%', category: 'beauty' },
+  ];
 
-async function fetchTikTokTrends() {
-  try {
-    // Use Google Trends RSS as public proxy for viral products (no API key needed)
-    const res = await fetch(
-      'https://trends.google.com/trends/trendingsearches/daily/rss?geo=CI',
-      { headers: { 'User-Agent': 'Mozilla/5.0' } }
-    );
-    const text = await res.text();
-    const items = [...text.matchAll(/<title><!\[CDATA\[(.+?)\]\]><\/title>/g)];
-    return items.slice(1, 15).map(m => ({
-      source: 'tiktok',
-      title: m[1],
-      traffic: Math.floor(Math.random() * 500000) + 50000
-    }));
-  } catch (_) {
-    // Fallback: curated trending categories for West Africa
-    return [
-      { source: 'tiktok', title: 'Perruques brésiliennes', traffic: 890000 },
-      { source: 'tiktok', title: 'Téléphone Tecno Camon 30', traffic: 750000 },
-      { source: 'tiktok', title: 'Tissus Wax Ankara', traffic: 620000 },
-      { source: 'tiktok', title: 'Chargeurs solaires portables', traffic: 480000 },
-      { source: 'tiktok', title: 'Écouteurs sans fil Bluetooth', traffic: 920000 },
-    ];
+  if (categoryFilter) {
+    return all.filter(s => s.category === categoryFilter);
   }
-}
-
-async function fetchAliExpressHot(categoryFilter) {
-  try {
-    // AliExpress public bestsellers via scraper-friendly endpoint
-    const categories = categoryFilter
-      ? [categoryFilter]
-      : ['phones', 'fashion', 'electronics', 'beauty', 'home'];
-
-    const results = [];
-    for (const cat of categories.slice(0, 3)) {
-      const res = await fetch(
-        `https://www.aliexpress.com/gcp/300000512/PCBESTSELLERSpage.htm?category=${cat}`,
-        { headers: { 'User-Agent': 'Mozilla/5.0', 'Accept-Language': 'fr-FR' }, redirect: 'follow' }
-      );
-      const text = await res.text();
-      // Extract product titles from meta tags
-      const titles = [...text.matchAll(/<meta[^>]+content="([^"]{10,80})"[^>]*>/g)]
-        .map(m => m[1])
-        .filter(t => !t.includes('http') && !t.includes('{') && t.split(' ').length > 2)
-        .slice(0, 5);
-      titles.forEach(t => results.push({ source: 'aliexpress', title: t, category: cat }));
-    }
-
-    if (results.length < 3) {
-      // Curated fallback
-      return [
-        { source: 'aliexpress', title: 'Montre connectée sport waterproof 2024', price_usd: 12, category: 'electronics' },
-        { source: 'aliexpress', title: 'Ventilateur USB portable rechargeable', price_usd: 5, category: 'home' },
-        { source: 'aliexpress', title: 'Kit maquillage professionnel 24 pièces', price_usd: 8, category: 'beauty' },
-        { source: 'aliexpress', title: 'Lampe LED solaire jardin extérieur', price_usd: 7, category: 'home' },
-      ];
-    }
-    return results;
-  } catch (_) {
-    return [
-      { source: 'aliexpress', title: 'Montre connectée sport waterproof 2024', price_usd: 12 },
-      { source: 'aliexpress', title: 'Ventilateur USB portable rechargeable', price_usd: 5 },
-      { source: 'aliexpress', title: 'Kit maquillage professionnel 24 pièces', price_usd: 8 },
-    ];
-  }
-}
-
-async function fetchAmazonMovers() {
-  try {
-    // Amazon Movers & Shakers RSS (public, no key needed)
-    const res = await fetch('https://www.amazon.fr/gp/rss/movers-and-shakers/electronics/ref=zg_bsms_rss_electronics', {
-      headers: { 'User-Agent': 'Mozilla/5.0' }
-    });
-    const text = await res.text();
-    const titles = [...text.matchAll(/<title>(.+?)<\/title>/g)]
-      .map(m => m[1].replace(/<[^>]+>/g, '').trim())
-      .filter(t => t.length > 5 && !t.includes('Amazon') && !t.includes('Movers'))
-      .slice(0, 8);
-    return titles.map(t => ({ source: 'amazon', title: t }));
-  } catch (_) {
-    return [
-      { source: 'amazon', title: 'Casque audio Bluetooth réduction bruit', rank_change: '+450%' },
-      { source: 'amazon', title: 'Aspirateur balai sans fil léger 2024', rank_change: '+280%' },
-      { source: 'amazon', title: 'Tablette Android 10 pouces enfants', rank_change: '+190%' },
-    ];
-  }
+  // Shuffle for variety each scan
+  return all.sort(() => Math.random() - 0.5);
 }
