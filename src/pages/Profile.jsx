@@ -50,6 +50,8 @@ export default function Profile() {
     { icon: Bell, label: t('alerts'), to: '/Alerts' },
     { icon: MessageCircle, label: t('messages'), to: '/Messages' },
     { icon: CreditCard, label: t('subscription'), to: '/Subscription' },
+    { icon: HelpCircle, label: 'Assistance & FAQ', to: '/Assistance' },
+    { icon: FileText, label: "Conditions d'utilisation", to: '/CGU' },
   ];
 
   return (
