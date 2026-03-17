@@ -29,6 +29,8 @@ import Favorites from '@/pages/Favorites';
 import Onboarding from '@/pages/Onboarding';
 import ApiDashboard from '@/pages/ApiDashboard';
 import LiveScanner from '@/pages/LiveScanner';
+import CGU from '@/pages/CGU';
+import Assistance from '@/pages/Assistance';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();

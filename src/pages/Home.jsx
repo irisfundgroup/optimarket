@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Zap, TrendingUp, ShoppingBag, Briefcase, Plus, ArrowRight } from 'lucide-react';
+import HomeFooter from '@/components/home/HomeFooter';
 import { t } from '@/lib/i18n';
 import HeroSection from '@/components/home/HeroSection';
 import SectionHeader from '@/components/home/SectionHeader';
