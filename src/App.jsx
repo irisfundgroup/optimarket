@@ -27,6 +27,7 @@ import FlashSaleDetail from '@/pages/FlashSaleDetail';
 import ServiceRequests from '@/pages/ServiceRequests';
 import Favorites from '@/pages/Favorites';
 import Onboarding from '@/pages/Onboarding';
+import ApiDashboard from '@/pages/ApiDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -77,6 +78,7 @@ const AuthenticatedApp = () => {
         <Route path="/FlashSaleDetail" element={<FlashSaleDetail />} />
         <Route path="/ServiceRequests" element={<ServiceRequests />} />
         <Route path="/Favorites" element={<Favorites />} />
+        <Route path="/ApiDashboard" element={<ApiDashboard />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
