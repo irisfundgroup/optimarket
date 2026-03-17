@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Users } from 'lucide-react';
 import CountdownTimer from '@/components/ui/CountdownTimer';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 export default function FlashSaleCard({ sale }) {
+  const { currency } = useCurrency();
   const discount = sale.discount_percent || (sale.original_price ? Math.round((1 - sale.flash_price / sale.original_price) * 100) : 0);
   const soldPercent = sale.quantity_total ? Math.min(((sale.quantity_sold || 0) / sale.quantity_total) * 100, 100) : 0;
   const remaining = (sale.quantity_total || 0) - (sale.quantity_sold || 0);
+  const convertedFlashPrice = convertPrice(sale.flash_price, sale.currency || 'EUR', currency);
+  const convertedOriginalPrice = sale.original_price ? convertPrice(sale.original_price, sale.currency || 'EUR', currency) : null;
 
   return (
     <Link to={`/FlashSaleDetail?id=${sale.id}`} className="group block">
@@ -66,11 +71,11 @@ export default function FlashSaleCard({ sale }) {
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-3">
             <span className="font-black text-2xl" style={{ color: '#fbbf24', textShadow: '0 0 20px rgba(245,158,11,0.3)' }}>
-              {sale.flash_price?.toFixed(0)}
-              <span className="text-sm font-medium ml-0.5" style={{ color: '#92400e' }}>€</span>
+              {convertedFlashPrice.toFixed(0)}
+              <span className="text-sm font-medium ml-0.5" style={{ color: '#92400e' }}>{CURRENCY_SYMBOLS[currency]}</span>
             </span>
-            {sale.original_price && (
-              <span className="text-sm line-through" style={{ color: '#475569' }}>{sale.original_price?.toFixed(0)}€</span>
+            {convertedOriginalPrice && (
+              <span className="text-sm line-through" style={{ color: '#475569' }}>{convertedOriginalPrice.toFixed(0)}{CURRENCY_SYMBOLS[currency]}</span>
             )}
           </div>
 
