@@ -13,6 +13,10 @@ export default function FlashSaleDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
 
+  const navigate = useNavigate();
+
+  const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
+
   const { data: sale, isLoading } = useQuery({
     queryKey: ['flashSale', id],
     queryFn: () => base44.entities.FlashSale.filter({ id }).then(r => r[0]),
@@ -21,6 +25,21 @@ export default function FlashSaleDetail() {
 
   if (isLoading) return <div className="max-w-3xl mx-auto px-4 py-6"><Skeleton className="h-80 rounded-2xl" /></div>;
   if (!sale) return <div className="text-center py-20 text-slate-500">{t('no_results')}</div>;
+
+  const handleBuy = async () => {
+    await base44.entities.ChatMessage.create({
+      sender_email: user?.email,
+      sender_name: user?.full_name,
+      receiver_email: sale.seller_email,
+      message: `Bonjour, je souhaite acheter : "${sale.title}" au prix flash de ${sale.flash_price} ${sale.currency || 'EUR'}`,
+      related_type: 'product',
+      related_id: sale.product_id || sale.id,
+      conversation_id: [user?.email, sale.seller_email].sort().join('_') + '_' + sale.id,
+    });
+    // Incrémenter quantity_sold
+    await base44.entities.FlashSale.update(sale.id, { quantity_sold: (sale.quantity_sold || 0) + 1 });
+    navigate('/Messages');
+  };
 
   const discountPercent = sale.discount_percent || (sale.original_price ? Math.round((1 - sale.flash_price / sale.original_price) * 100) : 0);
   const remaining = (sale.quantity_total || 0) - (sale.quantity_sold || 0);
@@ -79,7 +98,7 @@ export default function FlashSaleDetail() {
             </div>
           )}
 
-          <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl text-lg h-12 gap-2" disabled={remaining <= 0}>
+          <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl text-lg h-12 gap-2" disabled={remaining <= 0} onClick={handleBuy}>
             <ShoppingCart className="w-5 h-5" /> {remaining > 0 ? t('buy') : 'Épuisé'}
           </Button>
         </div>
