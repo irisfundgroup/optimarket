@@ -115,8 +115,22 @@ export default function FlashSaleDetail() {
             </div>
           )}
 
-          <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl text-lg h-12 gap-2" disabled={remaining <= 0} onClick={handleBuy}>
-            <ShoppingCart className="w-5 h-5" /> {remaining > 0 ? t('buy') : 'Épuisé'}
+          {paymentStatus === 'success' && (
+            <div className="flex items-center gap-2 bg-emerald-900/40 border border-emerald-500/30 rounded-xl p-3 text-emerald-400 text-sm">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> Paiement confirmé ! Votre achat est enregistré.
+            </div>
+          )}
+          {paymentStatus === 'cancelled' && (
+            <div className="flex items-center gap-2 bg-red-900/40 border border-red-500/30 rounded-xl p-3 text-red-400 text-sm">
+              <XCircle className="w-4 h-4 flex-shrink-0" /> Paiement annulé.
+            </div>
+          )}
+
+          <Button className="w-full bg-orange-500 hover:bg-orange-600 rounded-xl text-lg h-12 gap-2" disabled={remaining <= 0 || buyMutation.isPending} onClick={() => buyMutation.mutate()}>
+            {buyMutation.isPending
+              ? <><Loader2 className="w-5 h-5 animate-spin" /> Redirection vers le paiement...</>
+              : <><ShoppingCart className="w-5 h-5" /> {remaining > 0 ? t('buy') : 'Épuisé'}</>
+            }
           </Button>
         </div>
       </div>
