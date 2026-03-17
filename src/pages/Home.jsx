@@ -71,6 +71,18 @@ export default function Home() {
     <div className="min-h-screen" style={{ background: '#060c18' }}>
       <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
+      {refBanner && (
+        <div className="max-w-6xl mx-auto px-4 md:px-8 pt-6">
+          <div className="flex items-center gap-3 bg-gradient-to-r from-orange-500/20 to-amber-500/10 border border-orange-500/30 rounded-2xl p-4 text-orange-300">
+            <span className="text-2xl">🎁</span>
+            <div className="flex-1">
+              <p className="font-bold text-sm">Vous avez été parrainé !</p>
+              <p className="text-xs text-orange-400">Inscrivez-vous pour recevoir 1 crédit offert et profiter de la plateforme.</p>
+            </div>
+            <button onClick={() => setRefBanner(false)} className="text-orange-400 hover:text-orange-300 text-xs">✕</button>
+          </div>
+        </div>
+      )}
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 space-y-12">
 
         {/* AI Opportunities */}
