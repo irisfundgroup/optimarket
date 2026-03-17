@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -29,7 +29,17 @@ const SkeletonCards = ({ count = 3, type = 'product' }) => (
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [refBanner, setRefBanner] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (ref) {
+      localStorage.setItem('pending_ref_code', ref);
+      setRefBanner(true);
+      window.history.replaceState({}, '', '/Home');
+    }
+  }, []);
 
   const { data: products = [], isLoading: loadingProducts } = useQuery({
     queryKey: ['homeProducts'],
