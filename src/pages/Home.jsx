@@ -150,6 +150,7 @@ export default function Home() {
           ))}
         </section>
       </div>
+      <HomeFooter />
     </div>
   );
 }
