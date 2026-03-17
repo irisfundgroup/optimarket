@@ -11,12 +11,27 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function ServiceDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
+  const navigate = useNavigate();
+  const [contactSent, setContactSent] = useState(false);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
   const { data: service, isLoading } = useQuery({
     queryKey: ['service', id],
     queryFn: () => base44.entities.Service.filter({ id }).then(r => r[0]),
     enabled: !!id,
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: () => base44.entities.ChatMessage.create({
+      sender_email: user?.email,
+      sender_name: user?.full_name,
+      receiver_email: service.provider_email,
+      message: `Bonjour, je suis intéressé(e) par votre service : "${service.title}"`,
+      related_type: 'service',
+      related_id: service.id,
+      conversation_id: [user?.email, service.provider_email].sort().join('_') + '_' + service.id,
+    }),
+    onSuccess: () => { setContactSent(true); setTimeout(() => navigate('/Messages'), 800); },
   });
 
   const favMutation = useMutation({

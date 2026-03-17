@@ -14,7 +14,7 @@ const CATEGORIES = ['plumbing', 'electrical', 'cleaning', 'moving', 'tutoring', 
 
 export default function PublishService() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ title: '', description: '', price: '', category: '', price_type: 'fixed', location_city: '', location_country: '' });
+  const [form, setForm] = useState({ title: '', description: '', price: '', category: '', price_type: 'fixed', location_city: '', location_country: '', phone: '', whatsapp: '' });
 
   const { data: user } = useQuery({
     queryKey: ['currentUser'],
