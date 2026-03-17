@@ -118,13 +118,29 @@ export default function Profile() {
 
       {/* Admin */}
       {user?.role === 'admin' && (
-        <Link to="/AdminDashboard">
-          <div className="bg-orange-50 rounded-2xl border border-orange-200 p-4 mb-4 flex items-center gap-3 hover:bg-orange-100 transition-colors">
-            <Settings className="w-5 h-5 text-orange-500" />
-            <span className="flex-1 text-sm font-medium text-orange-700">{t('admin')} {t('dashboard')}</span>
-            <ChevronRight className="w-4 h-4 text-orange-400" />
-          </div>
-        </Link>
+        <div className="space-y-2 mb-4">
+          <Link to="/AdminDashboard">
+            <div className="bg-orange-50 rounded-2xl border border-orange-200 p-4 flex items-center gap-3 hover:bg-orange-100 transition-colors">
+              <Settings className="w-5 h-5 text-orange-500" />
+              <span className="flex-1 text-sm font-medium text-orange-700">{t('admin')} {t('dashboard')}</span>
+              <ChevronRight className="w-4 h-4 text-orange-400" />
+            </div>
+          </Link>
+          <Link to="/LiveScanner">
+            <div className="bg-emerald-50 rounded-2xl border border-emerald-200 p-4 flex items-center gap-3 hover:bg-emerald-100 transition-colors">
+              <span className="text-lg">🔴</span>
+              <span className="flex-1 text-sm font-medium text-emerald-700">Détection Marché Non-Stop</span>
+              <span className="text-[10px] font-bold bg-emerald-500 text-white px-2 py-0.5 rounded-full animate-pulse">LIVE</span>
+            </div>
+          </Link>
+          <Link to="/ApiDashboard">
+            <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 flex items-center gap-3 hover:bg-slate-100 transition-colors">
+              <span className="text-lg">🏗️</span>
+              <span className="flex-1 text-sm font-medium text-slate-700">Architecture API</span>
+              <ChevronRight className="w-4 h-4 text-slate-400" />
+            </div>
+          </Link>
+        </div>
       )}
 
       {/* Logout */}
