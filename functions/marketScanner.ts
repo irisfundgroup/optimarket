@@ -146,7 +146,7 @@ Retourne exactement 5 opportunités en JSON avec ces champs pour chacune:
 
     return Response.json({
       success: true,
-      signals_fetched: allSignals.length,
+      signals_fetched,
       ...results
     });
 
