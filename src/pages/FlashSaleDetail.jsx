@@ -27,10 +27,11 @@ export default function FlashSaleDetail() {
   if (!sale) return <div className="text-center py-20 text-slate-500">{t('no_results')}</div>;
 
   const handleBuy = async () => {
+    const sellerEmail = sale.seller_email || 'support@optimarket.app';
     await base44.entities.ChatMessage.create({
       sender_email: user?.email,
       sender_name: user?.full_name,
-      receiver_email: sale.seller_email,
+      receiver_email: sellerEmail,
       message: `Bonjour, je souhaite acheter : "${sale.title}" au prix flash de ${sale.flash_price} ${sale.currency || 'EUR'}`,
       related_type: 'product',
       related_id: sale.product_id || sale.id,
