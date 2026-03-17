@@ -125,6 +125,26 @@ export default function Subscription() {
         <p className="text-slate-500 max-w-md mx-auto">Débloquez les opportunités premium, contactez les meilleurs prestataires et maximisez vos revenus</p>
       </div>
 
+      {/* Payment status banners */}
+      {paymentStatus === 'verifying' && (
+        <div className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6 text-blue-700">
+          <Loader2 className="w-5 h-5 animate-spin flex-shrink-0" />
+          <span className="font-medium">Vérification du paiement en cours...</span>
+        </div>
+      )}
+      {paymentStatus === 'success' && (
+        <div className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-2xl p-4 mb-6 text-emerald-700">
+          <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+          <span className="font-medium">Paiement confirmé ! Votre abonnement est activé.</span>
+        </div>
+      )}
+      {paymentStatus === 'cancelled' && (
+        <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl p-4 mb-6 text-red-700">
+          <XCircle className="w-5 h-5 flex-shrink-0" />
+          <span className="font-medium">Paiement annulé. Aucun montant n'a été débité.</span>
+        </div>
+      )}
+
       {/* Current subscription */}
       {currentSub && (
         <div className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-2xl p-5 mb-8 text-white flex items-center justify-between shadow-xl shadow-orange-200">
