@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Zap, ShoppingBag, Briefcase, TrendingUp, Globe, ChevronRight, Check } from 'lucide-react';
+import { Zap, ShoppingBag, Briefcase, TrendingUp, Globe, ChevronRight, Check, Gift } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LANGUAGES, setStoredLang, getStoredLang } from '@/lib/i18n';
+import { base44 } from '@/api/base44Client';
 
 const STEPS = [
   {
@@ -48,13 +49,28 @@ export default function Onboarding() {
 
   const current = STEPS[step];
 
-  const handleNext = () => {
+  const refCode = new URLSearchParams(window.location.search).get('ref') || localStorage.getItem('pending_ref_code');
+
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (ref) localStorage.setItem('pending_ref_code', ref);
+  }, []);
+
+  const handleNext = async () => {
     if (step === 1) setStoredLang(selectedLang);
     if (step < STEPS.length - 1) {
       setStep(step + 1);
     } else {
       localStorage.setItem('onboarding_done', 'true');
       localStorage.setItem('user_role_pref', selectedRole);
+      // Apply referral code if present
+      const savedRef = localStorage.getItem('pending_ref_code');
+      if (savedRef) {
+        try {
+          await base44.functions.invoke('payment', { action: 'register_referral', ref_code: savedRef });
+          localStorage.removeItem('pending_ref_code');
+        } catch (e) { /* ignore */ }
+      }
       navigate('/Home');
     }
   };
