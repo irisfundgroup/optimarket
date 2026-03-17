@@ -197,7 +197,10 @@ export default function Subscription() {
 
             <Button onClick={() => subscribeMutation.mutate(plan)} disabled={subscribeMutation.isPending}
               className={`w-full rounded-xl h-11 text-white font-semibold shadow-lg gap-2 ${plan.btnClass}`}>
-              {t('subscribe')} <ArrowRight className="w-4 h-4" />
+              {subscribeMutation.isPending
+                ? <><Loader2 className="w-4 h-4 animate-spin" /> Redirection...</>
+                : <>{t('subscribe')} <ArrowRight className="w-4 h-4" /></>
+              }
             </Button>
           </div>
         ))}
