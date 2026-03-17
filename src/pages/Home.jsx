@@ -132,15 +132,18 @@ export default function Home() {
         {/* Publish CTA */}
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: 'Publier un produit', to: '/PublishProduct', color: 'from-orange-500 to-amber-500', icon: ShoppingBag },
-            { label: 'Proposer un service', to: '/PublishService', color: 'from-blue-500 to-blue-600', icon: Briefcase },
-            { label: 'Demander un service', to: '/PublishRequest', color: 'from-purple-500 to-purple-600', icon: Plus },
+            { label: 'Publier un produit', to: '/PublishProduct', accent: '#f59e0b', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.25)', icon: ShoppingBag },
+            { label: 'Proposer un service', to: '/PublishService', accent: '#818cf8', bg: 'rgba(99,102,241,0.08)', border: 'rgba(99,102,241,0.25)', icon: Briefcase },
+            { label: 'Demander un service', to: '/PublishRequest', accent: '#c084fc', bg: 'rgba(192,132,252,0.08)', border: 'rgba(192,132,252,0.25)', icon: Plus },
           ].map((cta, i) => (
             <Link key={i} to={cta.to}>
-              <div className={`flex items-center gap-3 p-5 rounded-2xl bg-gradient-to-r ${cta.color} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all`}>
-                <cta.icon className="w-6 h-6" />
-                <span className="font-semibold">{cta.label}</span>
-                <ArrowRight className="w-4 h-4 ml-auto" />
+              <div className="flex items-center gap-3 p-5 rounded-2xl transition-all"
+                style={{ background: cta.bg, border: `1px solid ${cta.border}`, color: cta.accent }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 12px 30px rgba(0,0,0,0.4), 0 0 20px ${cta.accent}20`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}>
+                <cta.icon className="w-5 h-5" />
+                <span className="font-semibold text-sm">{cta.label}</span>
+                <ArrowRight className="w-4 h-4 ml-auto opacity-60" />
               </div>
             </Link>
           ))}
