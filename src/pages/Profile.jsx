@@ -7,8 +7,11 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { t, LANGUAGES, getStoredLang, setStoredLang } from '@/lib/i18n';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useCurrency } from '@/hooks/useCurrency';
+import { SUPPORTED_CURRENCIES, CURRENCY_NAMES } from '@/lib/currency';
 
 export default function Profile() {
+  const { currency, setCurrency } = useCurrency();
   const { data: user } = useQuery({
     queryKey: ['currentUser'],
     queryFn: () => base44.auth.me(),
@@ -103,6 +106,28 @@ export default function Profile() {
                     <span>{l.label}</span>
                     {l.region && <span className="text-slate-400 text-[10px] ml-1">({l.region})</span>}
                   </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Currency */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-100 mb-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CreditCard className="w-5 h-5 text-slate-500" />
+            <span className="font-medium text-sm">Devise</span>
+          </div>
+          <Select value={currency} onValueChange={setCurrency}>
+            <SelectTrigger className="w-48 rounded-xl">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_CURRENCIES.map(curr => (
+                <SelectItem key={curr} value={curr}>
+                  {CURRENCY_NAMES[curr]} ({curr})
                 </SelectItem>
               ))}
             </SelectContent>
