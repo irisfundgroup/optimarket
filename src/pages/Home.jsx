@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Zap, TrendingUp, ShoppingBag, Briefcase } from 'lucide-react';
+import { Zap, TrendingUp, ShoppingBag, Briefcase, Plus, ArrowRight } from 'lucide-react';
 import { t } from '@/lib/i18n';
 import HeroSection from '@/components/home/HeroSection';
 import SectionHeader from '@/components/home/SectionHeader';
@@ -11,6 +11,20 @@ import ServiceCard from '@/components/cards/ServiceCard';
 import OpportunityCard from '@/components/cards/OpportunityCard';
 import FlashSaleCard from '@/components/cards/FlashSaleCard';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+
+const SkeletonCards = ({ count = 3, type = 'product' }) => (
+  <div className={`grid ${type === 'service' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'} gap-4`}>
+    {Array(count).fill(0).map((_, i) => (
+      <div key={i} className="space-y-3">
+        <Skeleton className="aspect-[4/3] rounded-2xl" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-3 w-1/2" />
+      </div>
+    ))}
+  </div>
+);
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,7 +37,7 @@ export default function Home() {
 
   const { data: services = [], isLoading: loadingServices } = useQuery({
     queryKey: ['homeServices'],
-    queryFn: () => base44.entities.Service.filter({ status: 'active' }, '-created_date', 6),
+    queryFn: () => base44.entities.Service.filter({ status: 'active' }, '-created_date', 4),
   });
 
   const { data: opportunities = [], isLoading: loadingOpps } = useQuery({
@@ -42,65 +56,94 @@ export default function Home() {
     }
   };
 
-  const SkeletonCards = ({ count = 3 }) => (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {Array(count).fill(0).map((_, i) => (
-        <div key={i} className="space-y-3">
-          <Skeleton className="aspect-[4/3] rounded-2xl" />
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-3 w-1/2" />
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-slate-50">
       <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 space-y-10">
-        {/* Opportunities */}
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 space-y-12">
+
+        {/* AI Opportunities */}
         <section>
           <SectionHeader title={t('today_opportunities')} icon={TrendingUp} linkTo="/Opportunities" iconColor="text-emerald-500" />
-          {loadingOpps ? <SkeletonCards count={4} /> : (
+          {loadingOpps ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-48 rounded-2xl" />)}
+            </div>
+          ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {opportunities.map(opp => <OpportunityCard key={opp.id} opportunity={opp} />)}
-              {opportunities.length === 0 && <p className="text-slate-500 text-sm col-span-full">{t('no_results')}</p>}
+              {opportunities.length === 0 && (
+                <div className="col-span-full flex flex-col items-center gap-3 py-10 text-slate-400">
+                  <TrendingUp className="w-10 h-10 opacity-30" />
+                  <p className="text-sm">{t('no_results')}</p>
+                </div>
+              )}
             </div>
           )}
         </section>
 
         {/* Flash Sales */}
         <section>
-          <SectionHeader title={t('flash_deals')} icon={Zap} linkTo="/FlashSales" iconColor="text-red-500" />
-          {loadingFlash ? <SkeletonCards count={4} /> : (
+          <div className="flex items-center justify-between mb-4">
+            <SectionHeader title={t('flash_deals')} icon={Zap} iconColor="text-red-500" />
+            <Link to="/FlashSales" className="flex items-center gap-1 text-sm text-orange-500 hover:text-orange-600 font-medium">
+              {t('see_all')} <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          {loadingFlash ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-52 rounded-2xl" />)}
+            </div>
+          ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {flashSales.map(sale => <FlashSaleCard key={sale.id} sale={sale} />)}
-              {flashSales.length === 0 && <p className="text-slate-500 text-sm col-span-full">{t('no_results')}</p>}
+              {flashSales.length === 0 && (
+                <div className="col-span-full flex flex-col items-center gap-3 py-10 text-slate-400">
+                  <Zap className="w-10 h-10 opacity-30" />
+                  <p className="text-sm">{t('no_results')}</p>
+                </div>
+              )}
             </div>
           )}
         </section>
 
-        {/* Products Near Me */}
+        {/* Products */}
         <section>
           <SectionHeader title={t('products_near')} icon={ShoppingBag} linkTo="/Products" iconColor="text-blue-500" />
           {loadingProducts ? <SkeletonCards count={6} /> : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {products.map(p => <ProductCard key={p.id} product={p} />)}
-              {products.length === 0 && <p className="text-slate-500 text-sm col-span-full">{t('no_results')}</p>}
+              {products.length === 0 && <p className="col-span-full text-slate-500 text-sm text-center py-8">{t('no_results')}</p>}
             </div>
           )}
         </section>
 
-        {/* Services Near Me */}
+        {/* Services */}
         <section>
           <SectionHeader title={t('services_near')} icon={Briefcase} linkTo="/Services" iconColor="text-purple-500" />
-          {loadingServices ? <SkeletonCards count={4} /> : (
+          {loadingServices ? <SkeletonCards count={4} type="service" /> : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {services.map(s => <ServiceCard key={s.id} service={s} />)}
-              {services.length === 0 && <p className="text-slate-500 text-sm col-span-full">{t('no_results')}</p>}
+              {services.length === 0 && <p className="col-span-full text-slate-500 text-sm text-center py-8">{t('no_results')}</p>}
             </div>
           )}
+        </section>
+
+        {/* Publish CTA */}
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { label: 'Publier un produit', to: '/PublishProduct', color: 'from-orange-500 to-amber-500', icon: ShoppingBag },
+            { label: 'Proposer un service', to: '/PublishService', color: 'from-blue-500 to-blue-600', icon: Briefcase },
+            { label: 'Demander un service', to: '/PublishRequest', color: 'from-purple-500 to-purple-600', icon: Plus },
+          ].map((cta, i) => (
+            <Link key={i} to={cta.to}>
+              <div className={`flex items-center gap-3 p-5 rounded-2xl bg-gradient-to-r ${cta.color} text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all`}>
+                <cta.icon className="w-6 h-6" />
+                <span className="font-semibold">{cta.label}</span>
+                <ArrowRight className="w-4 h-4 ml-auto" />
+              </div>
+            </Link>
+          ))}
         </section>
       </div>
     </div>
