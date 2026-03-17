@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Star, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 const AVAIL = {
   available: { dot: 'bg-emerald-500', label: 'Disponible', text: 'text-emerald-600' },
@@ -16,8 +18,10 @@ const CAT_ICONS = {
 };
 
 export default function ServiceCard({ service }) {
+  const { currency } = useCurrency();
   const avail = AVAIL[service.availability] || AVAIL.offline;
   const catIcon = CAT_ICONS[service.category] || '✨';
+  const convertedPrice = service.price ? convertPrice(service.price, 'EUR', currency) : null;
 
   return (
     <Link to={`/ServiceDetail?id=${service.id}`} className="group block">
@@ -40,7 +44,7 @@ export default function ServiceCard({ service }) {
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="font-bold text-slate-900 text-base">
-                  {service.price ? `${service.price}€` : <span className="text-xs text-slate-400">Devis</span>}
+                  {convertedPrice ? `${convertedPrice.toFixed(0)}${CURRENCY_SYMBOLS[currency]}` : <span className="text-xs text-slate-400">Devis</span>}
                 </p>
                 {service.price_type === 'hourly' && <span className="text-[10px] text-slate-400">/heure</span>}
               </div>
