@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight, MessageCircle, HelpCircle, FileText } from 'lucide-react';
+import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight, MessageCircle, HelpCircle, FileText, Gift } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { t, LANGUAGES, getStoredLang, setStoredLang } from '@/lib/i18n';
@@ -50,6 +50,7 @@ export default function Profile() {
     { icon: Bell, label: t('alerts'), to: '/Alerts' },
     { icon: MessageCircle, label: t('messages'), to: '/Messages' },
     { icon: CreditCard, label: t('subscription'), to: '/Subscription' },
+    { icon: Gift, label: 'Parrainage & Affiliation', to: '/Referral' },
     { icon: HelpCircle, label: 'Assistance & FAQ', to: '/Assistance' },
     { icon: FileText, label: "Conditions d'utilisation", to: '/CGU' },
   ];

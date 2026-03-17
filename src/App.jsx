@@ -31,6 +31,7 @@ import ApiDashboard from '@/pages/ApiDashboard';
 import LiveScanner from '@/pages/LiveScanner';
 import CGU from '@/pages/CGU';
 import Assistance from '@/pages/Assistance';
+import Referral from '@/pages/Referral';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -85,6 +86,7 @@ const AuthenticatedApp = () => {
         <Route path="/LiveScanner" element={<LiveScanner />} />
         <Route path="/CGU" element={<CGU />} />
         <Route path="/Assistance" element={<Assistance />} />
+        <Route path="/Referral" element={<Referral />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
