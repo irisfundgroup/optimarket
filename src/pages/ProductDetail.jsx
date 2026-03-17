@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Heart, Eye, Crown, MessageCircle, Share2 } from 'lucide-react';
+import { ArrowLeft, MapPin, Heart, Eye, Crown, MessageCircle, Share2, ShoppingCart, Loader2, CheckCircle2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { t } from '@/lib/i18n';
