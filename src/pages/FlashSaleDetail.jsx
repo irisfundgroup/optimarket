@@ -35,7 +35,7 @@ export default function FlashSaleDetail() {
       message: `Bonjour, je souhaite acheter : "${sale.title}" au prix flash de ${sale.flash_price} ${sale.currency || 'EUR'}`,
       related_type: 'product',
       related_id: sale.product_id || sale.id,
-      conversation_id: [user?.email, sale.seller_email].sort().join('_') + '_' + sale.id,
+      conversation_id: [user?.email, sellerEmail].sort().join('_') + '_' + sale.id,
     });
     // Incrémenter quantity_sold
     await base44.entities.FlashSale.update(sale.id, { quantity_sold: (sale.quantity_sold || 0) + 1 });
