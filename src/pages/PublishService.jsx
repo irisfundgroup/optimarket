@@ -92,6 +92,16 @@ export default function PublishService() {
             <Input value={form.location_country} onChange={(e) => update('location_country', e.target.value)} className="rounded-xl mt-1" />
           </div>
         </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label>📞 Téléphone</Label>
+            <Input value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder="+225 07 00 00 00 00" className="rounded-xl mt-1" />
+          </div>
+          <div>
+            <Label>💬 WhatsApp</Label>
+            <Input value={form.whatsapp} onChange={(e) => update('whatsapp', e.target.value)} placeholder="+225 07 00 00 00 00" className="rounded-xl mt-1" />
+          </div>
+        </div>
         <Button type="submit" disabled={createMutation.isPending} className="w-full bg-blue-600 hover:bg-blue-700 rounded-xl">
           {createMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
           {t('publish')}

@@ -113,13 +113,36 @@ export default function ServiceDetail() {
         )}
 
         {/* Actions */}
-        <div className="flex gap-3 pt-2">
-          <Button className="flex-1 bg-blue-600 hover:bg-blue-700 rounded-xl gap-2">
-            <MessageCircle className="w-4 h-4" /> {t('contact')}
+        <div className="flex gap-3 pt-2 flex-wrap">
+          <Button
+            className="flex-1 bg-blue-600 hover:bg-blue-700 rounded-xl gap-2 min-w-[140px]"
+            onClick={() => contactMutation.mutate()}
+            disabled={contactMutation.isPending || contactSent}
+          >
+            <MessageCircle className="w-4 h-4" />
+            {contactSent ? 'Message envoyé ✓' : contactMutation.isPending ? 'Envoi...' : t('contact')}
           </Button>
-          <Button variant="outline" className="rounded-xl gap-2 text-orange-500 border-orange-200 hover:bg-orange-50">
-            <Lock className="w-4 h-4" /> <Phone className="w-4 h-4" />
-          </Button>
+
+          {service.phone ? (
+            <a href={`tel:${service.phone}`} className="flex-1 min-w-[120px]">
+              <Button variant="outline" className="w-full rounded-xl gap-2 text-emerald-600 border-emerald-300 hover:bg-emerald-50">
+                <Phone className="w-4 h-4" /> Appeler
+              </Button>
+            </a>
+          ) : (
+            <Button variant="outline" className="flex-1 min-w-[120px] rounded-xl gap-2 text-slate-400 border-slate-200" disabled>
+              <Lock className="w-4 h-4" /> Numéro non renseigné
+            </Button>
+          )}
+
+          {service.whatsapp && (
+            <a href={`https://wa.me/${service.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" className="rounded-xl gap-2 text-green-600 border-green-300 hover:bg-green-50">
+                <span className="text-base">💬</span> WhatsApp
+              </Button>
+            </a>
+          )}
+
           <Button variant="outline" className="rounded-xl" onClick={() => favMutation.mutate()}>
             <Heart className="w-4 h-4" />
           </Button>
