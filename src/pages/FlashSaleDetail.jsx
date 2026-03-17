@@ -8,8 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { t } from '@/lib/i18n';
 import CountdownTimer from '@/components/ui/CountdownTimer';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 export default function FlashSaleDetail() {
+  const { currency } = useCurrency();
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
   const [paymentStatus, setPaymentStatus] = useState(null);
@@ -87,9 +90,9 @@ export default function FlashSaleDetail() {
             <div>
               <h2 className="text-xl font-bold text-white">{sale.title}</h2>
               <div className="flex items-center gap-3 mt-2">
-                <span className="text-2xl font-bold text-orange-400">{sale.flash_price?.toFixed(0)} {sale.currency || 'EUR'}</span>
+                <span className="text-2xl font-bold text-orange-400">{convertPrice(sale.flash_price, sale.currency || 'EUR', currency).toFixed(0)} {CURRENCY_SYMBOLS[currency]}</span>
                 {sale.original_price && (
-                  <span className="text-lg text-slate-500 line-through">{sale.original_price?.toFixed(0)}</span>
+                  <span className="text-lg text-slate-500 line-through">{convertPrice(sale.original_price, sale.currency || 'EUR', currency).toFixed(0)}</span>
                 )}
               </div>
             </div>
