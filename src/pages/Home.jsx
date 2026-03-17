@@ -17,10 +17,10 @@ import { Button } from '@/components/ui/button';
 const SkeletonCards = ({ count = 3, type = 'product' }) => (
   <div className={`grid ${type === 'service' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'} gap-4`}>
     {Array(count).fill(0).map((_, i) => (
-      <div key={i} className="space-y-3">
-        <Skeleton className="aspect-[4/3] rounded-2xl" />
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-3 w-1/2" />
+      <div key={i} className="space-y-3 rounded-2xl p-3" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <Skeleton className="aspect-[4/3] rounded-xl" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        <Skeleton className="h-4 w-3/4 rounded-lg" style={{ background: 'rgba(255,255,255,0.06)' }} />
+        <Skeleton className="h-3 w-1/2 rounded-lg" style={{ background: 'rgba(255,255,255,0.04)' }} />
       </div>
     ))}
   </div>
