@@ -7,8 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { t } from '@/lib/i18n';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 export default function ServiceDetail() {
+  const { currency } = useCurrency();
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
   const navigate = useNavigate();
@@ -90,7 +93,7 @@ export default function ServiceDetail() {
           <div>
             <p className="text-sm text-slate-500">{t('price')}</p>
             <p className="text-2xl font-bold text-slate-900">
-              {service.price ? `${service.price}€` : 'Sur devis'}
+              {service.price ? `${convertPrice(service.price, 'EUR', currency).toFixed(0)}${CURRENCY_SYMBOLS[currency]}` : 'Sur devis'}
               {service.price_type === 'hourly' && <span className="text-sm font-normal text-slate-500">/h</span>}
             </p>
           </div>
