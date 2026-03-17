@@ -52,13 +52,7 @@ export default function AppLayout() {
 
         {/* Logo */}
         <Link to="/Home" className="flex items-center gap-2.5 flex-shrink-0 group">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg"
-            style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', boxShadow: '0 0 16px rgba(245,158,11,0.4)' }}>
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-black tracking-tight" style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            OptiMarket
-          </span>
+          <img src="https://media.base44.com/images/public/69b89fb850f8b3d28e9e4bf6/6c0cb9dce_generated_image.png" alt="OptiMarket" className="h-9 w-auto" />
         </Link>
 
         {/* Nav */}
