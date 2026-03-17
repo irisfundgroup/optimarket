@@ -151,6 +151,72 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, payment_url: data.payment_url || data.checkout_url });
     }
 
+    // ── 4. Register referral on signup ────────────────────────────────────────
+    if (action === 'register_referral') {
+      const { ref_code } = body;
+      if (!ref_code) return Response.json({ error: 'Code manquant' }, { status: 400 });
+
+      // Find the referrer by code (code = first 6 chars of email prefix + hash)
+      const allUsers = await base44.asServiceRole.entities.User.list();
+      const referrer = allUsers.find(u => {
+        const base = u.email?.split('@')[0]?.replace(/[^a-z0-9]/gi, '').toUpperCase().slice(0, 6) || 'USER';
+        const suffix = Math.abs(u.email?.split('').reduce((a, c) => a + c.charCodeAt(0), 0) || 0) % 9000 + 1000;
+        return `${base}${suffix}` === ref_code;
+      });
+
+      if (!referrer || referrer.email === user.email) {
+        return Response.json({ error: 'Code invalide' }, { status: 400 });
+      }
+
+      // Avoid duplicate
+      const existing = await base44.asServiceRole.entities.Referral.filter({ referrer_email: referrer.email, referred_email: user.email });
+      if (existing.length > 0) return Response.json({ success: true, already: true });
+
+      // Create referral record
+      await base44.asServiceRole.entities.Referral.create({
+        referrer_email: referrer.email,
+        referrer_name: referrer.full_name,
+        referred_email: user.email,
+        referred_name: user.full_name,
+        referral_code: ref_code,
+        status: 'registered',
+        reward_credits: 3,
+        type: 'referral',
+      });
+
+      // Grant 3 credits to referrer
+      const refSubs = await base44.asServiceRole.entities.Subscription.filter({ user_email: referrer.email, status: 'active' }, '-created_date', 1);
+      if (refSubs[0]) {
+        await base44.asServiceRole.entities.Subscription.update(refSubs[0].id, {
+          credits_remaining: (refSubs[0].credits_remaining || 0) + 3,
+        });
+      } else {
+        await base44.asServiceRole.entities.Subscription.create({
+          user_email: referrer.email,
+          plan: 'free',
+          credits_remaining: 3,
+          status: 'active',
+        });
+      }
+
+      // Grant 1 credit to new user (filleul)
+      const newUserSubs = await base44.entities.Subscription.filter({ user_email: user.email, status: 'active' }, '-created_date', 1);
+      if (newUserSubs[0]) {
+        await base44.entities.Subscription.update(newUserSubs[0].id, {
+          credits_remaining: (newUserSubs[0].credits_remaining || 0) + 1,
+        });
+      } else {
+        await base44.entities.Subscription.create({
+          user_email: user.email,
+          plan: 'free',
+          credits_remaining: 1,
+          status: 'active',
+        });
+      }
+
+      return Response.json({ success: true, referrer_name: referrer.full_name });
+    }
+
     return Response.json({ error: 'Unknown action' }, { status: 400 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
