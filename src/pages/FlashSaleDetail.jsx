@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function FlashSaleDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
+  const [paymentStatus, setPaymentStatus] = useState(null);
 
   const navigate = useNavigate();
 
@@ -23,24 +24,39 @@ export default function FlashSaleDetail() {
     enabled: !!id,
   });
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('payment_status');
+    if (status === 'success' && sale) {
+      base44.entities.FlashSale.update(sale.id, { quantity_sold: (sale.quantity_sold || 0) + 1 });
+      setPaymentStatus('success');
+      window.history.replaceState({}, '', `/FlashSaleDetail?id=${id}`);
+    } else if (status === 'cancelled') {
+      setPaymentStatus('cancelled');
+      window.history.replaceState({}, '', `/FlashSaleDetail?id=${id}`);
+    }
+  }, [sale]);
+
+  const buyMutation = useMutation({
+    mutationFn: async () => {
+      const res = await base44.functions.invoke('payment', {
+        action: 'buy_item',
+        item_type: 'flash_sale',
+        item_id: sale.id,
+        item_title: sale.title,
+        amount: sale.flash_price,
+        currency: sale.currency || 'XOF',
+      });
+      if (res.data?.payment_url) {
+        window.location.href = res.data.payment_url;
+      } else {
+        throw new Error(res.data?.error || 'Erreur de paiement');
+      }
+    },
+  });
+
   if (isLoading) return <div className="max-w-3xl mx-auto px-4 py-6"><Skeleton className="h-80 rounded-2xl" /></div>;
   if (!sale) return <div className="text-center py-20 text-slate-500">{t('no_results')}</div>;
-
-  const handleBuy = async () => {
-    const sellerEmail = sale.seller_email || 'support@optimarket.app';
-    await base44.entities.ChatMessage.create({
-      sender_email: user?.email,
-      sender_name: user?.full_name,
-      receiver_email: sellerEmail,
-      message: `Bonjour, je souhaite acheter : "${sale.title}" au prix flash de ${sale.flash_price} ${sale.currency || 'EUR'}`,
-      related_type: 'product',
-      related_id: sale.product_id || sale.id,
-      conversation_id: [user?.email, sellerEmail].sort().join('_') + '_' + sale.id,
-    });
-    // Incrémenter quantity_sold
-    await base44.entities.FlashSale.update(sale.id, { quantity_sold: (sale.quantity_sold || 0) + 1 });
-    navigate('/Messages');
-  };
 
   const discountPercent = sale.discount_percent || (sale.original_price ? Math.round((1 - sale.flash_price / sale.original_price) * 100) : 0);
   const remaining = (sale.quantity_total || 0) - (sale.quantity_sold || 0);
