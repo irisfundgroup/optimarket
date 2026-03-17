@@ -7,8 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { t } from '@/lib/i18n';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCurrency } from '@/hooks/useCurrency';
+import { convertPrice, CURRENCY_SYMBOLS } from '@/lib/currency';
 
 export default function ProductDetail() {
+  const { currency } = useCurrency();
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
   const queryClient = useQueryClient();
@@ -118,7 +121,7 @@ export default function ProductDetail() {
               )}
             </div>
           </div>
-          <p className="text-3xl font-bold text-orange-500">{product.price?.toFixed(0)}<span className="text-base font-normal text-slate-400 ml-1">{product.currency || 'EUR'}</span></p>
+          <p className="text-3xl font-bold text-orange-500">{convertPrice(product.price, product.currency || 'EUR', currency).toFixed(0)}<span className="text-base font-normal text-slate-400 ml-1">{CURRENCY_SYMBOLS[currency]}</span></p>
         </div>
 
         <div className="flex items-center gap-4 text-sm text-slate-500">
