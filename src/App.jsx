@@ -95,6 +95,14 @@ const AuthenticatedApp = () => {
 };
 
 function App() {
+  // Apply RTL direction and lang at root level
+  React.useEffect(() => {
+    const rtl = isRTL();
+    const lang = getStoredLang();
+    document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+  }, []);
+
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
