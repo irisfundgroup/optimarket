@@ -21,6 +21,23 @@ export default function ProductDetail() {
     enabled: !!id,
   });
 
+  const navigate = useNavigate();
+
+  const handleContact = async () => {
+    if (!product) return;
+    // Crée un message initial et redirige vers Messages
+    await base44.entities.ChatMessage.create({
+      sender_email: user?.email,
+      sender_name: user?.full_name,
+      receiver_email: product.seller_email,
+      message: `Bonjour, je suis intéressé(e) par votre annonce : "${product.title}"`,
+      related_type: 'product',
+      related_id: product.id,
+      conversation_id: [user?.email, product.seller_email].sort().join('_') + '_' + product.id,
+    });
+    navigate('/Messages');
+  };
+
   const favMutation = useMutation({
     mutationFn: () => base44.entities.Favorite.create({
       user_email: user?.email,
@@ -94,7 +111,7 @@ export default function ProductDetail() {
         </div>
 
         <div className="flex gap-3 pt-2">
-          <Button className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-xl gap-2">
+          <Button className="flex-1 bg-orange-500 hover:bg-orange-600 rounded-xl gap-2" onClick={handleContact}>
             <MessageCircle className="w-4 h-4" /> {t('contact')}
           </Button>
           <Button variant="outline" className="rounded-xl" onClick={() => favMutation.mutate()}>
