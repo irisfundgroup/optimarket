@@ -106,6 +106,51 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, paid: isPaid, status: data.status });
     }
 
+    // ── 3. Buy product / flash sale via GeniusPay ────────────────────────────
+    if (action === 'buy_item') {
+      const { item_type, item_id, item_title, amount, currency } = body;
+
+      const origin = req.headers.get('origin') || 'https://optimarket.app';
+      const callbackUrl = `${origin}/${item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail'}?id=${item_id}&payment_status=success`;
+      const cancelUrl = `${origin}/${item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail'}?id=${item_id}&payment_status=cancelled`;
+
+      const res = await fetch(`${GENIUSPAY_BASE}/payments/create`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${GENIUSPAY_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount,
+          currency: currency || 'XOF',
+          description: item_title,
+          customer_email: user.email,
+          customer_name: user.full_name || user.email,
+          callback_url: callbackUrl,
+          cancel_url: cancelUrl,
+          metadata: { user_email: user.email, item_type, item_id },
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return Response.json({ error: data.message || 'Erreur GeniusPay' }, { status: 400 });
+      }
+
+      await base44.entities.Payment.create({
+        user_email: user.email,
+        amount,
+        currency: currency || 'XOF',
+        type: 'product_purchase',
+        status: 'pending',
+        description: item_title,
+        related_id: item_id,
+      });
+
+      return Response.json({ success: true, payment_url: data.payment_url || data.checkout_url });
+    }
+
     return Response.json({ error: 'Unknown action' }, { status: 400 });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
