@@ -4,6 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { BarChart3, Users, ShoppingBag, Briefcase, CreditCard, Check, X, Zap, TrendingUp, Shield, AlertTriangle, Activity, Settings, Bot, Cpu, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ActivatorAdminPanel from '@/components/admin/ActivatorAdminPanel';
+import UnderevaluedProductsPanel from '@/components/admin/UnderevaluedProductsPanel';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
