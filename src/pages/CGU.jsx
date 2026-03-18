@@ -125,7 +125,7 @@ const LEGAL_SECTIONS = [
   {
     icon: Info,
     title: "1. Éditeur de la plateforme",
-    content: `OptiMarket est exploité par la société IRISFUNDGROUP. OptiMarket est une marque commerciale et une plateforme marketplace opérée par IRISFUNDGROUP. Contact : legal@optimarket.app`
+    content: `OptiMarket est exploité par la société IRISFUNDGROUP. RCCM : CI-ABJ-03-2023-B12-02849. OptiMarket est une marque commerciale et une plateforme marketplace opérée par IRISFUNDGROUP. Contact : legal@optimarket.app`
   },
   {
     icon: Shield,
