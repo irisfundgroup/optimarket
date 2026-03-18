@@ -186,6 +186,7 @@ export default function AdminDashboard() {
           <TabsTrigger value="stats" className="rounded-lg text-xs">Statistiques</TabsTrigger>
           <TabsTrigger value="ai" className="rounded-lg text-xs">IA & Flash</TabsTrigger>
           <TabsTrigger value="payments" className="rounded-lg text-xs">Paiements</TabsTrigger>
+          <TabsTrigger value="undervalued" className="rounded-lg text-xs">📊 Produits sous-évalués</TabsTrigger>
           <TabsTrigger value="users" className="rounded-lg text-xs">Utilisateurs</TabsTrigger>
           <TabsTrigger value="activators" className="rounded-lg text-xs">🧑‍💼 Activateurs</TabsTrigger>
         </TabsList>
