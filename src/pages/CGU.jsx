@@ -245,15 +245,40 @@ export default function CGU() {
         </div>
       </div>
 
-      {/* Warning banner for finance tab */}
+      {/* Finance tab extras */}
       {activeTab === 'finance' && (
-        <div className="max-w-3xl mx-auto px-4 mt-4">
+        <div className="max-w-3xl mx-auto px-4 mt-4 space-y-3">
+          {/* Warning */}
           <div className="rounded-2xl p-4 flex items-start gap-3"
             style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)' }}>
             <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-red-300 leading-relaxed">
-              <strong>Avertissement important :</strong> Le programme Activateur est un système de marketing à commission. Les gains sont variables et non garantis. Participez uniquement avec des fonds que vous êtes prêt à perdre.
+              <strong>Avertissement important :</strong> Les gains proviennent des ventes réelles aux acheteurs finaux, jamais de l'argent de nouveaux Activateurs. Ils sont variables et non garantis.
             </p>
+          </div>
+          {/* Flow diagram */}
+          <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <p className="text-xs text-slate-500 uppercase font-bold mb-4 tracking-widest">Circuit de l'argent</p>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+              {[
+                { emoji: '🧑‍💼', label: 'Activateur', sub: 'achète un pack' },
+                { emoji: '🏪', label: 'OptiMarket', sub: 'finance la campagne' },
+                { emoji: '🛍️', label: 'Acheteur final', sub: 'achète les produits' },
+                { emoji: '💰', label: 'Commission', sub: 'versée à l\'Activateur' },
+              ].map((step, i, arr) => (
+                <React.Fragment key={i}>
+                  <div className="flex flex-col items-center text-center gap-1">
+                    <div className="text-2xl">{step.emoji}</div>
+                    <p className="text-white text-xs font-bold">{step.label}</p>
+                    <p className="text-slate-500 text-[10px]">{step.sub}</p>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <ArrowRight className="w-4 h-4 text-orange-400 flex-shrink-0 rotate-90 md:rotate-0" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+            <p className="text-[10px] text-center text-slate-600 mt-4">L'argent provient des ventes aux acheteurs finaux — jamais des packs des nouveaux Activateurs</p>
           </div>
         </div>
       )}
