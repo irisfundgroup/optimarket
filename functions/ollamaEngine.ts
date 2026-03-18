@@ -98,6 +98,9 @@ Deno.serve(async (req) => {
 
   // ── Ping Ollama ──────────────────────────────────────────────────────────
   if (action === "ping") {
+    if (!OLLAMA_URL) {
+      return Response.json({ available: false, url: null, error: "OLLAMA_URL not configured — OpenAI fallback active" });
+    }
     try {
       const res = await fetch(`${OLLAMA_URL}/api/tags`, { signal: AbortSignal.timeout(5000) });
       if (!res.ok) throw new Error("not ok");
