@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { BarChart3, Users, ShoppingBag, Briefcase, CreditCard, Check, X, Zap, TrendingUp, Shield, AlertTriangle, Activity, Settings, Bot } from 'lucide-react';
+import ActivatorAdminPanel from '@/components/admin/ActivatorAdminPanel';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
