@@ -39,7 +39,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
             </span>
           </h1>
           <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#64748b' }}>
-            Opportunités IA · Ventes Flash · Marketplace
+            Opportunités · Ventes Flash · Marketplace · Géolocalisation
           </p>
         </div>
 
