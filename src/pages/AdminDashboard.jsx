@@ -162,6 +162,19 @@ export default function AdminDashboard() {
             <Zap className="w-5 h-5 text-orange-400 ml-auto" />
           </div>
         </Link>
+        <Link to="/OllamaStudio" className="mt-2 block">
+          <div className="rounded-2xl p-4 flex items-center gap-4 cursor-pointer hover:opacity-90 transition-opacity"
+            style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(16,185,129,0.06))', border: '1px solid rgba(99,102,241,0.25)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.2)' }}>
+              <Cpu className="w-5 h-5 text-indigo-400" />
+            </div>
+            <div>
+              <p className="text-white font-bold">Ollama Studio</p>
+              <p className="text-slate-400 text-xs">IA locale gratuite · Fiches produits · Marketing · Arbitrage · Réponses clients</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-indigo-400 ml-auto" />
+          </div>
+        </Link>
       </div>
 
       <Tabs defaultValue="validation" className="space-y-6">
