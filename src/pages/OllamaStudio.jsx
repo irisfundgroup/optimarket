@@ -124,6 +124,125 @@ function ResultBlock({ result, engine, model }) {
   );
 }
 
+// ── Bloc action après analyse opportunité ─────────────────────────────────────
+function OpportunityActionBlock({ form, result }) {
+  const queryClient = useQueryClient();
+  const [actionDone, setActionDone] = useState(null); // 'claimed' | 'listed'
+
+  const marketPrice = form.sell_price_target || 0;
+  const flashPrice = Math.round(marketPrice * 0.75);
+  const totalCost = (form.buy_price || 0) + (form.shipping_cost || 0);
+  const margin = flashPrice - totalCost;
+  const isViable = result?.verdict === 'EXCELLENT' || result?.verdict === 'BON';
+
+  const claimMutation = useMutation({
+    mutationFn: async () => {
+      await base44.entities.Opportunity.create({
+        title: `Opportunité : ${form.name}`,
+        description: result?.summary || '',
+        type: 'product_deal',
+        score: isViable ? 80 : 60,
+        potential_margin: Math.round((margin / totalCost) * 100) || 15,
+        category: form.niche || 'other',
+        status: 'active',
+      });
+    },
+    onSuccess: () => { setActionDone('claimed'); queryClient.invalidateQueries({ queryKey: ['adminOpps'] }); },
+  });
+
+  const listMutation = useMutation({
+    mutationFn: async () => {
+      await base44.entities.FlashSale.create({
+        title: `🔥 Flash Deal : ${form.name}`,
+        description: result?.summary || `Opportunité détectée par IA — ${result?.recommendation || ''}`,
+        original_price: marketPrice,
+        flash_price: flashPrice,
+        discount_percent: 25,
+        currency: 'XOF',
+        ends_at: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
+        quantity_total: 10,
+        quantity_sold: 0,
+        category: form.niche || 'other',
+        status: 'active',
+        is_auto_generated: true,
+      });
+    },
+    onSuccess: () => { setActionDone('listed'); queryClient.invalidateQueries({ queryKey: ['adminFlashSales'] }); },
+  });
+
+  if (actionDone === 'claimed') return (
+    <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)' }}>
+      <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+      <p className="text-sm text-emerald-300 font-semibold">✅ Opportunité enregistrée dans votre portfolio !</p>
+    </div>
+  );
+
+  if (actionDone === 'listed') return (
+    <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)' }}>
+      <CheckCircle className="w-5 h-5 text-orange-400 flex-shrink-0" />
+      <div>
+        <p className="text-sm text-orange-300 font-semibold">🔥 Vente flash publiée sur le marketplace !</p>
+        <p className="text-xs text-slate-400 mt-0.5">Prix affiché : <strong className="text-white">{flashPrice.toLocaleString()} XOF</strong> (−25% du prix marché)</p>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.06)' }}>
+      <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: 'rgba(99,102,241,0.12)', borderBottom: '1px solid rgba(99,102,241,0.2)' }}>
+        <Sparkles className="w-4 h-4 text-indigo-400" />
+        <span className="text-xs font-bold text-indigo-300">💡 L'IA recommande — Que voulez-vous faire ?</span>
+      </div>
+      <div className="p-4 space-y-3">
+        {/* Récapitulatif prix */}
+        <div className="grid grid-cols-3 gap-2 text-center mb-1">
+          <div className="rounded-xl p-2" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <p className="text-[10px] text-slate-500 mb-0.5">Coût total</p>
+            <p className="text-sm font-bold text-slate-300">{totalCost.toLocaleString()} XOF</p>
+          </div>
+          <div className="rounded-xl p-2" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <p className="text-[10px] text-slate-500 mb-0.5">Prix marché</p>
+            <p className="text-sm font-bold text-white">{marketPrice.toLocaleString()} XOF</p>
+          </div>
+          <div className="rounded-xl p-2" style={{ background: 'rgba(245,158,11,0.12)', border: '1px solid rgba(245,158,11,0.25)' }}>
+            <p className="text-[10px] text-orange-400 mb-0.5">Flash −25%</p>
+            <p className="text-sm font-bold text-orange-300">{flashPrice.toLocaleString()} XOF</p>
+          </div>
+        </div>
+
+        {margin > 0 && (
+          <p className="text-[11px] text-emerald-400 text-center">
+            📈 Marge estimée en revente flash : <strong>+{margin.toLocaleString()} XOF</strong>
+          </p>
+        )}
+
+        {/* Boutons d'action */}
+        <div className="grid grid-cols-2 gap-3">
+          <button onClick={() => claimMutation.mutate()} disabled={claimMutation.isPending}
+            className="flex flex-col items-center gap-1.5 py-3 px-3 rounded-xl transition-all"
+            style={{ background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10b981' }}>
+            {claimMutation.isPending
+              ? <Loader2 className="w-5 h-5 animate-spin" />
+              : <Package className="w-5 h-5" />}
+            <span className="text-xs font-bold">Récupérer pour moi</span>
+            <span className="text-[10px] text-slate-400 text-center leading-tight">Ajouter à mes opportunités</span>
+          </button>
+
+          <button onClick={() => listMutation.mutate()} disabled={listMutation.isPending}
+            className="flex flex-col items-center gap-1.5 py-3 px-3 rounded-xl transition-all"
+            style={{ background: 'rgba(245,158,11,0.12)', border: '1px solid rgba(245,158,11,0.35)', color: '#fbbf24' }}>
+            {listMutation.isPending
+              ? <Loader2 className="w-5 h-5 animate-spin" />
+              : <Tag className="w-5 h-5" />}
+            <span className="text-xs font-bold">Publier en Flash −25%</span>
+            <span className="text-[10px] text-slate-400 text-center leading-tight">{flashPrice.toLocaleString()} XOF · 48h</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Formulaire use-case ────────────────────────────────────────────────────────
 function UseCase({ tab, ollamaStatus, selectedModel }) {
   const [form, setForm] = useState({});
