@@ -3,8 +3,8 @@ import { TrendingUp, Clock, CheckCircle2, XCircle } from 'lucide-react';
 
 const STATUS_CONFIG = {
   active:    { icon: TrendingUp,   color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', label: 'En cours' },
-  completed: { icon: CheckCircle2, color: '#10b981', bg: 'rgba(16,185,129,0.12)', label: 'Complétée' },
-  failed:    { icon: XCircle,      color: '#ef4444', bg: 'rgba(239,68,68,0.12)',  label: 'Échouée' },
+  completed: { icon: CheckCircle2, color: '#10b981', bg: 'rgba(16,185,129,0.12)', label: 'Commission reçue' },
+  failed:    { icon: XCircle,      color: '#ef4444', bg: 'rgba(239,68,68,0.12)',  label: 'Non aboutie' },
   paused:    { icon: Clock,        color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', label: 'En pause' },
 };
 
@@ -21,7 +21,7 @@ export default function InvestmentCard({ investment }) {
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-white text-sm truncate">{investment.opportunity_title || 'Opportunité'}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Investi: <span className="text-slate-300">{investment.amount_invested?.toLocaleString()} XOF</span></p>
+          <p className="text-xs text-slate-500 mt-0.5">Pack: <span className="text-slate-300">{investment.amount_invested?.toLocaleString()} XOF</span></p>
         </div>
         <span className="flex items-center gap-1 text-xs font-semibold rounded-full px-2 py-0.5 flex-shrink-0"
           style={{ color: cfg.color, background: cfg.bg }}>
@@ -31,11 +31,11 @@ export default function InvestmentCard({ investment }) {
 
       <div className="grid grid-cols-3 gap-2 mt-3">
         <div className="text-center">
-          <p className="text-xs text-slate-500">Gain %</p>
+          <p className="text-xs text-slate-500">Commission %</p>
           <p className="text-sm font-bold text-emerald-400">+{gainPercent}%</p>
         </div>
         <div className="text-center">
-          <p className="text-xs text-slate-500">Gain XOF</p>
+          <p className="text-xs text-slate-500">Commission XOF</p>
           <p className="text-sm font-bold text-emerald-400">+{gainAmount.toLocaleString()}</p>
         </div>
         <div className="text-center">
