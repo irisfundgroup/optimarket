@@ -314,10 +314,66 @@ export default function ActivatorActivate() {
         </div>
       </div>
 
-      <StepIndicator step={step} />
+      {/* ── Sélecteur de mode d'activation ── */}
+      {!activationMode && (
+        <div className="max-w-xl mx-auto space-y-4">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-bold text-white mb-2">Comment voulez-vous monétiser cette opportunité ?</h2>
+            <p className="text-slate-400 text-sm">Choisissez votre stratégie de revenu</p>
+          </div>
+
+          <button onClick={() => setActivationMode('own')}
+            className="w-full rounded-2xl p-5 text-left transition-all"
+            style={{
+              background: 'rgba(99,102,241,0.08)',
+              border: '2px solid rgba(99,102,241,0.3)',
+            }}
+            onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'rgba(99,102,241,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'}}
+            onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(99,102,241,0.15)' }}>
+                <TrendingUp className="w-6 h-6 text-indigo-400" />
+              </div>
+              <div className="flex-1">
+                <p className="font-bold text-white text-base mb-1">📊 Revendre manuellement</p>
+                <p className="text-slate-400 text-xs">Vous gardez la main sur la distribution. Revenu maximum, mais nécessite plus d'efforts.</p>
+                <p className="text-indigo-300 font-semibold text-xs mt-2">Commissions jusqu'à +30%</p>
+              </div>
+            </div>
+          </button>
+
+          <button onClick={() => setActivationMode('resell')}
+            className="w-full rounded-2xl p-5 text-left transition-all"
+            style={{
+              background: 'rgba(16,185,129,0.08)',
+              border: '2px solid rgba(16,185,129,0.3)',
+            }}
+            onMouseEnter={(e) => {e.currentTarget.style.borderColor = 'rgba(16,185,129,0.6)'; e.currentTarget.style.transform = 'translateY(-2px)'}}
+            onMouseLeave={(e) => {e.currentTarget.style.borderColor = 'rgba(16,185,129,0.3)'; e.currentTarget.style.transform = 'translateY(0)'}}>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(16,185,129,0.15)' }}>
+                <Zap className="w-6 h-6 text-emerald-400" />
+              </div>
+              <div className="flex-1">
+                <p className="font-bold text-white text-base mb-1">⚡ Mode automatisé (IA)</p>
+                <p className="text-slate-400 text-xs">L'IA génère automatiquement annonces, prix et stratégie. Revenu passif avec efforts minimes.</p>
+                <p className="text-emerald-300 font-semibold text-xs mt-2">Commissions +18%, revenus garantis</p>
+              </div>
+            </div>
+          </button>
+
+          <button onClick={() => setActivationMode(false)}
+            variant="outline"
+            className="w-full py-2.5 text-slate-400 rounded-xl border border-white/15 hover:text-white transition-all">
+            Annuler
+          </button>
+        </div>
+      )}
+
+      {activationMode && <StepIndicator step={step} />}
 
       {/* ── Étape 1 : Info campagne ── */}
-      {step === 1 && (
+      {activationMode && step === 1 && (
         <div className="space-y-4">
           {opportunity && (
             <div className="rounded-2xl p-5" style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)' }}>
