@@ -32,7 +32,7 @@ async function callOpenAI(prompt, jsonMode = false) {
 
 // ── Moteur hybride : Ollama d'abord, fallback OpenAI ───────────────────────
 async function callAI(prompt, { jsonMode = false, preferOllama = true, model } = {}) {
-  if (preferOllama) {
+  if (preferOllama && OLLAMA_URL) {
     try {
       const raw = await callOllama(prompt, model || DEFAULT_MODEL);
       return { text: raw, engine: "ollama", model: model || DEFAULT_MODEL };
