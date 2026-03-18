@@ -1,8 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Zap, Gift, TrendingUp, Users } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+
+// Messages de fallback si l'IA échoue
+const FALLBACK_MESSAGES = [
+  { headline: '💰 Gagnez +25% dès aujourd\'hui', subtitle: '+3,247 membres gagnent déjà. Vendre, acheter ou activer des campagnes sans risque.' },
+  { headline: '🚀 Rejoignez +3K entrepreneurs', subtitle: 'Obtenez des commissions réelles sur vos ventes. Pas d\'engagement, retrait rapide garantis.' },
+  { headline: '💎 Devenez partenaire commercial', subtitle: 'Financer une campagne = Générer des revenus. Jusqu\'à 25% de commissions en 14 jours.' },
+  { headline: '⚡ Opportunité limitée ce mois', subtitle: 'Plus de 1000 activateurs font confiance. Commission garantie, frais transparents.' },
+  { headline: '🎁 Bonus inscription : +1 crédit', subtitle: 'Nouveaux membres reçoivent des crédits gratuits. Commencez votre première vente dès maintenant.' },
+];
 
 export default function PromoBanner() {
   const [isVisible, setIsVisible] = useState(true);
+  const [message, setMessage] = useState(FALLBACK_MESSAGES[0]);
+  const [loading, setLoading] = useState(false);
+
+  // Générer un nouveau message via IA toutes les 60 secondes
+  useEffect(() => {
+    const generateMessage = async () => {
+      setLoading(true);
+      try {
+        const response = await base44.integrations.Core.InvokeLLM({
+          prompt: `Génère un MESSAGE MARKETING ultra persuasif et concis pour une bannière promotionnelle OptiMarket (plateforme de vente, achat et marketing d'affiliation). 
+          
+          Format STRICT - Répondre UNIQUEMENT en JSON valide:
+          {
+            "headline": "Emoji + ACCROCHE PRINCIPALE (court, max 60 caractères)",
+            "subtitle": "Bénéfice principal + preuve sociale (max 100 caractères)"
+          }
+          
+          Critères:
+          - Urgence + bénéfice financier clair
+          - Preuve sociale (nombre d'utilisateurs, gains, etc.)
+          - Appel à l'action implicite
+          - Ton direct, sans clichés
+          
+          Variation: ${Math.random()}`,
+          response_json_schema: {
+            type: 'object',
+            properties: {
+              headline: { type: 'string' },
+              subtitle: { type: 'string' },
+            },
+            required: ['headline', 'subtitle'],
+          },
+        });
+
+        if (response.data?.headline && response.data?.subtitle) {
+          setMessage(response.data);
+        }
+      } catch (error) {
+        // Fallback silencieux en cas d'erreur IA
+        const randomMsg = FALLBACK_MESSAGES[Math.floor(Math.random() * FALLBACK_MESSAGES.length)];
+        setMessage(randomMsg);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    // Premier appel immédiat
+    generateMessage();
+
+    // Puis chaque 60 secondes
+    const interval = setInterval(generateMessage, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (!isVisible) return null;
 
@@ -31,17 +95,17 @@ export default function PromoBanner() {
           </div>
 
           <div className="min-w-0 flex-1">
-            {/* Headline percutante */}
+            {/* Headline avec transition */}
             <div className="flex items-center gap-2 mb-0.5">
-              <p className="text-white font-black text-sm md:text-lg leading-tight">
-                💰 <strong>Gagnez +25% dès aujourd'hui</strong>
+              <p className="text-white font-black text-sm md:text-lg leading-tight transition-opacity duration-300" style={{ opacity: loading ? 0.6 : 1 }}>
+                <strong>{message.headline}</strong>
               </p>
-              <span className="hidden sm:inline-block text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff' }}>⏰ Limité</span>
+              <span className="hidden sm:inline-block text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff' }}>⏰ Mis à jour</span>
             </div>
 
-            {/* Sous-titre avec preuve sociale */}
-            <p className="text-white/95 text-xs md:text-sm font-medium">
-              <strong>+3,247 membres</strong> gagnent déjà. Vendre, acheter ou activer des campagnes commerciales sans risque.
+            {/* Sous-titre avec transition */}
+            <p className="text-white/95 text-xs md:text-sm font-medium transition-opacity duration-300" style={{ opacity: loading ? 0.6 : 1 }}>
+              {message.subtitle}
             </p>
 
             {/* Stats rapides */}
