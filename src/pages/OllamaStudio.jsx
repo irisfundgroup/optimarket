@@ -385,6 +385,11 @@ function UseCase({ tab, ollamaStatus, selectedModel }) {
       </Button>
 
       <ResultBlock result={result} engine={engine} model={usedModel} />
+
+      {/* Bloc action IA — uniquement pour opportunity_analysis */}
+      {tab === 'opportunity_analysis' && result && (
+        <OpportunityActionBlock form={form} result={result} />
+      )}
     </div>
   );
 }
