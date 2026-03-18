@@ -86,6 +86,7 @@ Retourne UNIQUEMENT un JSON : { "best_buy": { "source": "...", "price": 0 }, "be
 
 // ─────────────────────────────────────────────────────────────────────────────
 Deno.serve(async (req) => {
+  try {
   const base44 = createClientFromRequest(req);
   const user = await base44.auth.me();
 
