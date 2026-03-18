@@ -330,6 +330,48 @@ function ParticipationManager({ investments }) {
   );
 }
 
+// ─── Notify New Campaign Button (used in CampaignVolumes header) ───
+function NotifyCampaignButton({ opportunities }) {
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleNotify = async () => {
+    setSending(true);
+    try {
+      const highScore = opportunities.filter(o => o.score >= 70 && o.status === 'active');
+      await base44.functions.invoke('notifications', {
+        action: 'notify_all_activators_new_campaigns',
+        campaigns: highScore.map(o => ({
+          id: o.id,
+          title: o.title,
+          score: o.score,
+          potential_margin: o.potential_margin,
+        })),
+      });
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleNotify}
+      disabled={sending || sent}
+      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl transition-all"
+      style={{
+        background: sent ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.12)',
+        color: sent ? '#10b981' : '#f59e0b',
+        border: `1px solid ${sent ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.25)'}`,
+      }}
+    >
+      <Bell className="w-3.5 h-3.5" />
+      {sent ? '✓ Notifié !' : sending ? 'Envoi...' : 'Notifier les partenaires'}
+    </button>
+  );
+}
+
 // ─── Main Panel ───
 export default function ActivatorAdminPanel() {
   const { data: investments = [] } = useQuery({
