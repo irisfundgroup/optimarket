@@ -84,8 +84,9 @@ export default function Profile() {
           <div>
             <h1 className="text-xl font-bold">{user?.full_name || 'Utilisateur'}</h1>
             <p className="text-slate-400 text-sm">{user?.email}</p>
-            <div className="flex gap-2 mt-2">
-              <Badge className="bg-white/10 text-white border-0 text-xs">{user?.role || 'user'}</Badge>
+            <div className="flex gap-2 mt-2 flex-wrap">
+              <Badge className="bg-white/10 text-white border-0 text-xs capitalize">{user?.role === 'activator' ? '🧑‍💼 Activateur' : '🛍️ Client'}</Badge>
+              {isActivator && <LevelBadge level={getLevelFromEarnings(0)} />}
               {subscription && (
                 <Badge className="bg-orange-500/20 text-orange-400 border-0 text-xs gap-1">
                   <Crown className="w-3 h-3" /> {subscription.plan}
