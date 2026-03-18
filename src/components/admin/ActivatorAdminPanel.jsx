@@ -234,10 +234,20 @@ function ParticipationManager({ investments }) {
   const [filter, setFilter] = useState('all');
 
   const updateStatusMutation = useMutation({
-    mutationFn: async ({ id, status, actualProfit }) => {
+    mutationFn: async ({ id, status, actualProfit, investment }) => {
       const data = { status };
       if (actualProfit !== undefined) data.actual_profit = actualProfit;
-      if (status === 'completed') data.profit_received = true;
+      if (status === 'completed') {
+        data.profit_received = true;
+        // Send commission notification to activator
+        await base44.functions.invoke('notifications', {
+          action: 'notify_commission',
+          activator_email: investment.activator_email,
+          opportunity_title: investment.opportunity_title,
+          commission_amount: actualProfit ?? investment.actual_profit ?? investment.expected_return_amount,
+          investment_id: id,
+        });
+      }
       return base44.entities.ActivatorInvestment.update(id, data);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['adminInvestments'] }),
