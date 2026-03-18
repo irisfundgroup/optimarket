@@ -23,11 +23,11 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
       <div className="absolute top-0 left-0 right-0 h-px"
       style={{ background: 'linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)' }} />
 
-      <div className="text-[#c47a31] mx-auto px-4 py-14 relative md:px-8 md:py-24 max-w-6xl">
+      <div className="bg-gray-50 text-[#c47a31] mx-auto px-4 py-14 relative md:px-8 md:py-24 max-w-6xl">
         <div className="text-center mb-10">
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4">
-            <span className="text-white">Le Marché</span>
+            <span className="bg-slate-950 text-white">Le Marché</span>
             <br />
             <span style={{
               background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fcd34d 100%)',
@@ -88,7 +88,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
           { to: '/Opportunities', icon: TrendingUp, label: 'Opportunités', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#6ee7b7' }].
           map((item, i) =>
           <Link key={i} to={item.to}>
-              <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+              <div className="bg-slate-50 px-5 py-2.5 text-sm font-semibold rounded-xl flex items-center gap-2 transition-all"
             style={{
               background: item.color,
               border: `1px solid ${item.border}`,
