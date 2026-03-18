@@ -106,11 +106,11 @@ export default function AppLayout() {
             <Link key={item.path} to={item.path}
               className="relative p-2.5 rounded-xl transition-all"
               style={{
-                color: isActive(item.path) ? '#fbbf24' : '#64748b',
+                color: isActive(item.path) ? '#d97706' : '#64748b',
                 background: isActive(item.path) ? 'rgba(245,158,11,0.1)' : 'transparent',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#e2e8f0'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = isActive(item.path) ? '#fbbf24' : '#64748b'; e.currentTarget.style.background = isActive(item.path) ? 'rgba(245,158,11,0.1)' : 'transparent'; }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#1e293b'; e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = isActive(item.path) ? '#d97706' : '#64748b'; e.currentTarget.style.background = isActive(item.path) ? 'rgba(245,158,11,0.1)' : 'transparent'; }}
             >
               <item.icon className="w-5 h-5" />
               {item.badge && unreadAlerts.length > 0 && (
