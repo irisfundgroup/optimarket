@@ -3,7 +3,7 @@ import OpenAI from 'npm:openai';
 
 const openai = new OpenAI({ apiKey: Deno.env.get("OPENAI_API_KEY") });
 
-const OLLAMA_URL = Deno.env.get("OLLAMA_URL") || "http://localhost:11434";
+const OLLAMA_URL = Deno.env.get("OLLAMA_URL") ?? null;
 const DEFAULT_MODEL = Deno.env.get("OLLAMA_MODEL") || "llama3";
 
 // ── Appel Ollama local ───────────────────────────────────────────────────────
