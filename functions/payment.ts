@@ -121,14 +121,14 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, paid: isPaid, status: paymentData.status });
     }
 
-    // ── 3. Buy product / flash sale via GeniusPay ────────────────────────────
+    // ── 3. Buy product / flash sale / activation via GeniusPay ──────────────
     if (action === 'buy_item') {
-      const { item_type, item_id, item_title, amount, currency } = body;
+      const { item_type, item_id, item_title, amount, currency, success_url_override, error_url_override } = body;
 
       const origin = req.headers.get('origin') || 'https://optimarket.app';
       const detailPage = item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail';
-      const successUrl = `${origin}/${detailPage}?id=${item_id}&payment_status=success`;
-      const errorUrl = `${origin}/${detailPage}?id=${item_id}&payment_status=cancelled`;
+      const successUrl = success_url_override || `${origin}/${detailPage}?id=${item_id}&payment_status=success`;
+      const errorUrl = error_url_override || `${origin}/${detailPage}?id=${item_id}&payment_status=cancelled`;
 
       const res = await fetch(`${GENIUSPAY_BASE}/payments`, {
         method: 'POST',
