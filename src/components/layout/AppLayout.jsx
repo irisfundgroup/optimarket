@@ -245,7 +245,7 @@ export default function AppLayout() {
                 <>
                   <item.icon className="w-5 h-5 transition-colors" style={{ color: isActive(item.path) ? '#fbbf24' : '#475569' }} />
                   <span className="text-[10px] font-medium transition-colors" style={{ color: isActive(item.path) ? '#fbbf24' : '#475569' }}>
-                     {t(item.labelKey)}
+                     {item.label || t(item.labelKey)}
                   </span>
                 </>
               )}
