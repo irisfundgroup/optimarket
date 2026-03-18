@@ -76,7 +76,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: '#ffffff' }}>
+    <div className="min-h-screen" style={{ background: '#fff7ed' }}>
       <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
       {refBanner && (
