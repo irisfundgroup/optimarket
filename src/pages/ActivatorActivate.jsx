@@ -234,14 +234,13 @@ export default function ActivatorActivate() {
     localStorage.setItem('_act_fees', String(fees));
     localStorage.setItem('_act_gains', String(gains));
     localStorage.setItem('_act_guarantee', String(guarantee));
+    localStorage.setItem('_act_mode', activationMode);
 
     const origin = window.location.origin;
     const successUrl = `${origin}/ActivatorActivate?opportunityId=${opportunityId}&payment_status=success&ref=genius`;
     const errorUrl   = `${origin}/ActivatorActivate?opportunityId=${opportunityId}&payment_status=cancelled`;
 
     // Montant à payer maintenant :
-    // - platform_now → commission plateforme uniquement (fees)
-    // - delivery → garantie bloquée (guarantee), commission sera déduite à la livraison
     const amountToPay = paymentMethod === 'delivery' ? guarantee : fees;
     const description = paymentMethod === 'delivery'
       ? `Garantie activation campagne: ${opportunity.title}`
@@ -252,7 +251,7 @@ export default function ActivatorActivate() {
       item_type: 'activation',
       item_id: opportunity.id,
       item_title: description,
-      amount: Math.max(200, Math.round(amountToPay)), // minimum GeniusPay = 200 XOF
+      amount: Math.max(200, Math.round(amountToPay)),
       currency: 'XOF',
       success_url_override: successUrl,
       error_url_override: errorUrl,
