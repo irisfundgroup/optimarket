@@ -40,6 +40,7 @@ import ActivatorActivate from '@/pages/ActivatorActivate';
 import ActivatorWallet from '@/pages/ActivatorWallet';
 import ActivatorHistory from '@/pages/ActivatorHistory';
 import OpportunityEngine from '@/pages/OpportunityEngine';
+import OllamaStudio from '@/pages/OllamaStudio';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
