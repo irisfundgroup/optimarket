@@ -557,8 +557,73 @@ export default function ActivatorActivate() {
         </div>
       )}
 
-      {/* ── Étape 4 : Confirmation finale ── */}
-      {step === 4 && (
+      {/* ── Étape 4 : Génération IA (si mode resell) ── */}
+      {activationMode === 'resell' && step === 4 && (
+        <div className="space-y-4">
+          {!resellGenerating ? (
+            <>
+              <div className="rounded-2xl p-5 space-y-3" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)' }}>
+                <p className="text-white font-bold text-center mb-4">Génération automatisée par IA</p>
+                <p className="text-slate-400 text-sm">L'IA va générer :</p>
+                <div className="space-y-2">
+                  {['📋 Annonces optimisées', '💰 Stratégie de prix (A/B testing)', '🎯 Ciblage automatique par géolocalisation', '📊 Reporting en temps réel'].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 text-sm text-slate-300">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <Button variant="outline" className="flex-1 rounded-xl border-white/15 text-white" onClick={() => setStep(3)}>Retour</Button>
+                <Button
+                  className="flex-1 rounded-xl font-bold gap-2 h-11"
+                  style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: '#fff' }}
+                  onClick={async () => {
+                    setResellGenerating(true);
+                    try {
+                      // Générer annonces via IA
+                      await base44.integrations.Core.InvokeLLM({
+                        prompt: `Génère 3 annonces de vente ultra-persuasives pour "${opportunity?.title}" destinées au marché africain (Côte d'Ivoire, Mali, Senegal, Benin). 
+                        Format JSON:
+                        [
+                          {"title": "Annonce 1", "description": "...", "pricing_strategy": "..."},
+                          {"title": "Annonce 2", "description": "...", "pricing_strategy": "..."},
+                          {"title": "Annonce 3", "description": "...", "pricing_strategy": "..."}
+                        ]`,
+                        response_json_schema: {
+                          type: 'object',
+                          properties: {
+                            listings: { type: 'array' }
+                          }
+                        }
+                      });
+                      // Sauvegarde localStorage + procéder au paiement
+                      localStorage.setItem('_act_ai_generated', 'true');
+                      await handleConfirm();
+                    } catch (e) {
+                      console.error('Erreur génération IA:', e);
+                      // Continuer sans IA
+                      await handleConfirm();
+                    }
+                  }}>
+                  <Zap className="w-4 h-4" /> Générer & Payer
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-10">
+              <Loader2 className="w-12 h-12 text-emerald-400 animate-spin mx-auto mb-4" />
+              <p className="text-white font-bold">Génération des annonces en cours...</p>
+              <p className="text-slate-400 text-sm mt-2">L'IA crée votre stratégie de vente</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Étape 4 : Confirmation finale (mode own) ── */}
+      {activationMode === 'own' && step === 4 && (
         <div className="space-y-4">
           <div className="rounded-2xl p-5 space-y-3" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)' }}>
             <p className="text-white font-bold text-center mb-4">Récapitulatif final</p>
