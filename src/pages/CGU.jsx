@@ -21,7 +21,7 @@ const CGU_SECTIONS = [
   {
     icon: AlertTriangle,
     title: "4. Programme Activateur — Fonctionnement",
-    content: `Le programme Activateur est un système de marketing participatif. En tant qu'Activateur, vous achetez un "pack de participation" qui représente votre engagement à soutenir une campagne commerciale. En échange, vous percevez une commission calculée sur les ventes réellement générées par la campagne. Les commissions sont VARIABLES et dépendent exclusivement des performances commerciales réelles. Aucun gain fixe ou garanti n'est promis ou sous-entendu. La durée indicative d'une campagne est définie à titre estimatif uniquement.`
+    content: `Le programme Activateur est un système de marketing participatif basé sur les ventes réelles. Fonctionnement : l'Activateur (partenaire) achète un pack de participation pour soutenir une campagne commerciale. OptiMarket utilise ces fonds pour promouvoir et distribuer des produits auprès des acheteurs finaux (clients classiques). Les commissions perçues par l'Activateur proviennent EXCLUSIVEMENT de la marge générée par les ventes aux acheteurs finaux — jamais de l'argent d'autres Activateurs. Aucun gain fixe ou garanti n'est promis. La durée d'une campagne est indicative.`
   },
   {
     icon: Scale,
