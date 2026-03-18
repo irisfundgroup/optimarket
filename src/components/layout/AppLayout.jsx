@@ -144,15 +144,18 @@ export default function AppLayout() {
           <img src="https://media.base44.com/images/public/69b89fb850f8b3d28e9e4bf6/6c0cb9dce_generated_image.png" alt="OptiMarket" className="h-8 w-auto" />
         </Link>
         <div className="flex items-center gap-1">
-          <Link to="/Alerts" className="relative p-2" style={{ color: '#64748b' }}>
-            <Bell className="w-5 h-5" />
-            {unreadAlerts.length > 0 && (
-              <span className="absolute top-1 right-1 w-3 h-3 rounded-full text-[8px] text-white flex items-center justify-center font-black"
-                style={{ background: '#ef4444' }}>
-                {unreadAlerts.length}
-              </span>
-            )}
-          </Link>
+          {isActivator
+            ? <ActivatorNotificationBell user={user} />
+            : <Link to="/Alerts" className="relative p-2" style={{ color: '#64748b' }}>
+                <Bell className="w-5 h-5" />
+                {unreadAlerts.length > 0 && (
+                  <span className="absolute top-1 right-1 w-3 h-3 rounded-full text-[8px] text-white flex items-center justify-center font-black"
+                    style={{ background: '#ef4444' }}>
+                    {unreadAlerts.length}
+                  </span>
+                )}
+              </Link>
+          }
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 transition-colors" style={{ color: '#64748b' }}>
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
