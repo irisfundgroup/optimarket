@@ -58,8 +58,8 @@
 
   body {
     @apply bg-background text-foreground;
-    background-color: #080d1a;
-    color: #e2e8f0;
+    background-color: #ffffff;
+    color: #0f172a;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
