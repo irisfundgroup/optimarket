@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Shield, FileText, Scale, Lock, AlertTriangle, CheckCircle, Banknote, RefreshCw, Info } from 'lucide-react';
+import { ChevronDown, ChevronUp, Shield, FileText, Scale, Lock, AlertTriangle, CheckCircle, Banknote, RefreshCw, Info, ArrowRight } from 'lucide-react';
 
 // ─── CGU SECTIONS ───────────────────────────────────────────────────────────
 const CGU_SECTIONS = [
