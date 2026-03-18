@@ -6,7 +6,7 @@ const CGU_SECTIONS = [
   {
     icon: FileText,
     title: "1. Objet et champ d'application",
-    content: `Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation de la plateforme OptiMarket, accessible via notre application mobile et web. En vous inscrivant ou en utilisant nos services, vous acceptez sans réserve les présentes CGU. OptiMarket est une marketplace qui met en relation des acheteurs, vendeurs et prestataires de services, ainsi qu'un programme de marketing participatif permettant à des partenaires ("Activateurs") de soutenir des campagnes commerciales en échange de commissions variables.`
+    content: `Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation de la plateforme OptiMarket, exploitée par la société IRISFUNDGROUP, accessible via notre application mobile et web. En vous inscrivant ou en utilisant nos services, vous acceptez sans réserve les présentes CGU. OptiMarket est une marketplace opérée par IRISFUNDGROUP qui met en relation des acheteurs, vendeurs et prestataires de services, ainsi qu'un programme de marketing participatif permettant à des partenaires ("Activateurs") de soutenir des campagnes commerciales en échange de commissions variables.`
   },
   {
     icon: CheckCircle,
@@ -125,7 +125,7 @@ const LEGAL_SECTIONS = [
   {
     icon: Info,
     title: "1. Éditeur de la plateforme",
-    content: `OptiMarket est édité par la société OptiMarket SAS (ou son équivalent légal selon le pays d'immatriculation). Siège social : [Adresse complète à renseigner]. Numéro d'immatriculation : [À renseigner]. Directeur de la publication : [Nom du dirigeant]. Contact : legal@optimarket.app`
+    content: `OptiMarket est exploité par la société IRISFUNDGROUP. OptiMarket est une marque commerciale et une plateforme marketplace opérée par IRISFUNDGROUP. Contact : legal@optimarket.app`
   },
   {
     icon: Shield,
@@ -219,7 +219,7 @@ export default function CGU() {
           <h1 className="text-2xl md:text-4xl font-black mb-2" style={{ color: '#e2e8f0' }}>
             Transparence &amp; <span style={{ background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Conformité</span>
           </h1>
-          <p className="text-sm" style={{ color: '#64748b' }}>Dernière mise à jour : Mars 2026 · Version 2.0</p>
+          <p className="text-sm" style={{ color: '#64748b' }}>Exploité par <strong style={{ color: '#f59e0b' }}>IRISFUNDGROUP</strong> · Dernière mise à jour : Mars 2026 · Version 2.0</p>
         </div>
       </div>
 
