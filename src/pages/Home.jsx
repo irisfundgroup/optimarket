@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Zap, TrendingUp, ShoppingBag, Briefcase, Plus, ArrowRight } from 'lucide-react';
 import HomeFooter from '@/components/home/HomeFooter';
+import PromoBanner from '@/components/home/PromoBanner';
 import { t } from '@/lib/i18n';
 import HeroSection from '@/components/home/HeroSection';
 import SectionHeader from '@/components/home/SectionHeader';
@@ -77,6 +78,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen" style={{ background: '#fff7ed' }}>
+      <PromoBanner />
       <HeroSection searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
 
       {refBanner && (
