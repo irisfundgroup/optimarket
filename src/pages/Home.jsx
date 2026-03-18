@@ -14,6 +14,7 @@ import FlashSaleCard from '@/components/cards/FlashSaleCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import ActivatorHome from '@/pages/ActivatorHome';
 
 const SkeletonCards = ({ count = 3, type = 'product' }) => (
   <div className={`grid ${type === 'service' ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'} gap-4`}>
@@ -31,6 +32,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [refBanner, setRefBanner] = useState(false);
   const navigate = useNavigate();
+
+  const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
 
   useEffect(() => {
     const ref = new URLSearchParams(window.location.search).get('ref');
@@ -66,6 +69,11 @@ export default function Home() {
       navigate(`/Products?search=${encodeURIComponent(searchQuery)}`);
     }
   };
+
+  // Si l'utilisateur est un activateur, afficher son interface dédiée
+  if (user?.role === 'activator') {
+    return <ActivatorHome />;
+  }
 
   return (
     <div className="min-h-screen" style={{ background: '#060c18' }}>
