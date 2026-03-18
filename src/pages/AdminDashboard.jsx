@@ -328,6 +328,11 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
+        {/* Activators Tab */}
+        <TabsContent value="activators">
+          <ActivatorAdminPanel />
+        </TabsContent>
+
         {/* Users Tab */}
         <TabsContent value="users">
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
