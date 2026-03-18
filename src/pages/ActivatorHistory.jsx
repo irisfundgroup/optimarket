@@ -24,9 +24,9 @@ export default function ActivatorHistory() {
   const successRate = investments.length ? Math.round((completed.length / investments.length) * 100) : 0;
 
   const stats = [
-    { label: 'Total investi', value: `${totalInvested.toLocaleString()}`, unit: 'XOF', icon: BarChart2, color: '#f59e0b' },
-    { label: 'Gains réalisés', value: `${totalGains.toLocaleString()}`, unit: 'XOF', icon: TrendingUp, color: '#10b981' },
-    { label: 'Réussites', value: completed.length, unit: 'opps', icon: CheckCircle2, color: '#a78bfa' },
+    { label: 'Total packs', value: `${totalInvested.toLocaleString()}`, unit: 'XOF', icon: BarChart2, color: '#f59e0b' },
+    { label: 'Commissions reçues', value: `${totalGains.toLocaleString()}`, unit: 'XOF', icon: TrendingUp, color: '#10b981' },
+    { label: 'Complétées', value: completed.length, unit: '', icon: CheckCircle2, color: '#a78bfa' },
     { label: 'Taux de succès', value: `${successRate}`, unit: '%', icon: Trophy, color: '#38bdf8' },
   ];
 
@@ -34,7 +34,7 @@ export default function ActivatorHistory() {
     <div className="max-w-3xl mx-auto px-4 md:px-8 py-6 space-y-6">
       <div className="flex items-center gap-3">
         <Link to="/ActivatorDashboard"><Button variant="ghost" size="icon" className="rounded-xl text-white"><ArrowLeft className="w-5 h-5" /></Button></Link>
-        <h1 className="text-xl font-black text-white">Historique & Stats</h1>
+        <h1 className="text-xl font-black text-white">Commissions & Historique</h1>
       </div>
 
       {/* Stats globales */}
@@ -56,7 +56,7 @@ export default function ActivatorHistory() {
           {active.length > 0 && (
             <div>
               <h2 className="text-white font-bold mb-3 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-orange-400" /> En cours ({active.length})
+                <Clock className="w-4 h-4 text-orange-400" /> Participations en cours ({active.length})
               </h2>
               <div className="space-y-3">{active.map(inv => <InvestmentCard key={inv.id} investment={inv} />)}</div>
             </div>
@@ -65,7 +65,7 @@ export default function ActivatorHistory() {
           {completed.length > 0 && (
             <div>
               <h2 className="text-white font-bold mb-3 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Complétées ({completed.length})
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Campagnes complétées ({completed.length})
               </h2>
               <div className="space-y-3">{completed.map(inv => <InvestmentCard key={inv.id} investment={inv} />)}</div>
             </div>
@@ -83,9 +83,9 @@ export default function ActivatorHistory() {
           {investments.length === 0 && (
             <div className="text-center py-16 rounded-2xl" style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.08)' }}>
               <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-20 text-orange-400" />
-              <p className="text-slate-400">Aucun investissement trouvé</p>
+              <p className="text-slate-400">Aucune participation trouvée</p>
               <Link to="/ActivatorOpportunities">
-                <Button className="mt-4 rounded-xl" style={{ background: '#f59e0b', color: '#000' }}>Explorer les opportunités</Button>
+                <Button className="mt-4 rounded-xl" style={{ background: '#f59e0b', color: '#000' }}>Voir les campagnes</Button>
               </Link>
             </div>
           )}
