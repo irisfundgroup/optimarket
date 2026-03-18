@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Home, ShoppingBag, Briefcase, Zap, Bell, MessageCircle, User, TrendingUp, Menu, X, Plus, LayoutDashboard, Activity, Wallet, History } from 'lucide-react';
+import ActivatorNotificationBell from '@/components/activator/ActivatorNotificationBell';
 import { t, isRTL } from '@/lib/i18n';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
