@@ -138,9 +138,10 @@ export default function AppLayout() {
       {/* Mobile Top Bar */}
       <header className="md:hidden fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-4"
         style={{
-          background: 'rgba(6, 12, 24, 0.95)',
+          background: 'rgba(255,255,255,0.97)',
           backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(245, 158, 11, 0.1)',
+          borderBottom: '1px solid rgba(245, 158, 11, 0.15)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
         }}>
         <Link to="/Home" className="flex items-center gap-2">
           <img src="https://media.base44.com/images/public/69b89fb850f8b3d28e9e4bf6/6c0cb9dce_generated_image.png" alt="OptiMarket" className="h-8 w-auto" />
