@@ -43,11 +43,11 @@ export default function ActivatorHome() {
               <span className="text-slate-400 text-sm">👋 Bonjour, {user?.full_name?.split(' ')[0]}</span>
               <LevelBadge level={level} />
             </div>
-            <h1 className="text-3xl font-black text-white mb-1">Activateur d'Opportunités</h1>
-            <p className="text-slate-400 text-sm mb-5">Investissez dans des opportunités vérifiées et gagnez automatiquement</p>
+            <h1 className="text-3xl font-black text-white mb-1">Espace Partenaire</h1>
+            <p className="text-slate-400 text-sm mb-5">Rejoignez des campagnes commerciales et recevez des commissions sur ventes réelles</p>
             <Link to="/ActivatorOpportunities">
               <Button className="gap-2 rounded-xl font-bold" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#000' }}>
-                <Zap className="w-4 h-4" /> Explorer les opportunités
+                <Zap className="w-4 h-4" /> Voir les campagnes
               </Button>
             </Link>
           </div>
@@ -63,9 +63,9 @@ export default function ActivatorHome() {
         {/* Actions rapides */}
         <div className="grid grid-cols-3 gap-3">
           {[
-            { label: 'Opportunités', to: '/ActivatorOpportunities', icon: TrendingUp, color: '#f59e0b', desc: 'Investir' },
+            { label: 'Campagnes', to: '/ActivatorOpportunities', icon: TrendingUp, color: '#f59e0b', desc: 'Rejoindre' },
             { label: 'Mon Wallet', to: '/ActivatorWallet', icon: Wallet, color: '#10b981', desc: 'Solde & Retrait' },
-            { label: 'Historique', to: '/ActivatorHistory', icon: History, color: '#a78bfa', desc: 'Mes gains' },
+            { label: 'Historique', to: '/ActivatorHistory', icon: History, color: '#a78bfa', desc: 'Mes commissions' },
           ].map(({ label, to, icon: Icon, color, desc }) => (
             <Link key={to} to={to}>
               <div className="rounded-2xl p-4 text-center transition-all hover:scale-105 cursor-pointer"
@@ -84,7 +84,7 @@ export default function ActivatorHome() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-white font-bold flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-orange-400" /> Mes investissements
+              <TrendingUp className="w-4 h-4 text-orange-400" /> Mes participations actives
             </h2>
             <Link to="/ActivatorHistory" className="text-xs text-orange-400 flex items-center gap-1 hover:text-orange-300">
               Voir tout <ArrowRight className="w-3 h-3" />
@@ -95,9 +95,9 @@ export default function ActivatorHome() {
           ) : investments.length === 0 ? (
             <div className="text-center py-10 rounded-2xl" style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.08)' }}>
               <TrendingUp className="w-10 h-10 mx-auto mb-3 opacity-20 text-orange-400" />
-              <p className="text-slate-400 text-sm">Activez votre première opportunité</p>
+              <p className="text-slate-400 text-sm">Rejoignez votre première campagne commerciale</p>
               <Link to="/ActivatorOpportunities">
-                <Button className="mt-3 rounded-xl" size="sm" style={{ background: '#f59e0b', color: '#000' }}>C'est parti 🚀</Button>
+                <Button className="mt-3 rounded-xl" size="sm" style={{ background: '#f59e0b', color: '#000' }}>Démarrer 🚀</Button>
               </Link>
             </div>
           ) : (
@@ -109,7 +109,7 @@ export default function ActivatorHome() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-white font-bold flex items-center gap-2">
-              <Trophy className="w-4 h-4 text-emerald-400" /> Meilleures opportunités
+              <Trophy className="w-4 h-4 text-emerald-400" /> Meilleures campagnes
             </h2>
             <Link to="/ActivatorOpportunities" className="text-xs text-orange-400 flex items-center gap-1 hover:text-orange-300">
               Tout voir <ArrowRight className="w-3 h-3" />
