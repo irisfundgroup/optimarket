@@ -2,7 +2,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight, MessageCircle, HelpCircle, FileText, Gift } from 'lucide-react';
+import { User, ShoppingBag, Briefcase, Heart, History, CreditCard, Globe, LogOut, Crown, Bell, Settings, ChevronRight, MessageCircle, HelpCircle, FileText, Gift, TrendingUp, Wallet } from 'lucide-react';
+import LevelBadge, { getLevelFromEarnings } from '@/components/activator/LevelBadge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { t, LANGUAGES, getStoredLang, setStoredLang } from '@/lib/i18n';
@@ -46,7 +47,19 @@ export default function Profile() {
     window.location.reload();
   };
 
-  const menuItems = [
+  const isActivator = user?.role === 'activator';
+
+  const activatorMenuItems = [
+    { icon: TrendingUp, label: 'Mon Dashboard Activateur', to: '/ActivatorDashboard' },
+    { icon: TrendingUp, label: 'Opportunités', to: '/ActivatorOpportunities' },
+    { icon: Wallet, label: 'Mon Wallet', to: '/ActivatorWallet' },
+    { icon: History, label: 'Historique & Gains', to: '/ActivatorHistory' },
+    { icon: Gift, label: 'Parrainage & Affiliation', to: '/Referral' },
+    { icon: HelpCircle, label: 'Assistance & FAQ', to: '/Assistance' },
+    { icon: FileText, label: "Conditions d'utilisation", to: '/CGU' },
+  ];
+
+  const clientMenuItems = [
     { icon: ShoppingBag, label: `${t('my_listings')} (${myProducts.length})`, to: '/MyListings' },
     { icon: Briefcase, label: `${t('services')} (${myServices.length})`, to: '/MyServices' },
     { icon: Heart, label: `${t('favorites')} (${favorites.length})`, to: '/Favorites' },
@@ -57,6 +70,8 @@ export default function Profile() {
     { icon: HelpCircle, label: 'Assistance & FAQ', to: '/Assistance' },
     { icon: FileText, label: "Conditions d'utilisation", to: '/CGU' },
   ];
+
+  const menuItems = isActivator ? activatorMenuItems : clientMenuItems;
 
   return (
     <div className="max-w-2xl mx-auto px-4 md:px-8 py-6">
