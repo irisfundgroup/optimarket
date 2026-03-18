@@ -155,6 +155,7 @@ export default function AdminDashboard() {
           <TabsTrigger value="ai" className="rounded-lg text-xs">IA & Flash</TabsTrigger>
           <TabsTrigger value="payments" className="rounded-lg text-xs">Paiements</TabsTrigger>
           <TabsTrigger value="users" className="rounded-lg text-xs">Utilisateurs</TabsTrigger>
+          <TabsTrigger value="activators" className="rounded-lg text-xs">🧑‍💼 Activateurs</TabsTrigger>
         </TabsList>
 
         {/* Validation Tab */}
