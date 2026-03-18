@@ -14,7 +14,7 @@ export default function WalletCard({ wallet }) {
       <div className="grid grid-cols-3 gap-3">
         {[
           { icon: Wallet, label: 'Disponible', value: available, color: '#10b981' },
-          { icon: TrendingUp, label: 'En cours', value: inOpps, color: '#f59e0b' },
+          { icon: TrendingUp, label: 'Campagnes', value: inOpps, color: '#f59e0b' },
           { icon: Clock, label: 'En retrait', value: pending, color: '#94a3b8' },
         ].map(({ icon: Icon, label, value, color }) => (
           <div key={label} className="rounded-xl p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
