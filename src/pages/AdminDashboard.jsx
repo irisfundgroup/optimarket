@@ -361,6 +361,17 @@ export default function AdminDashboard() {
           </div>
         </TabsContent>
 
+        {/* Undervalued Products Tab */}
+        <TabsContent value="undervalued">
+          <div className="bg-white rounded-2xl border border-slate-100 p-6">
+            <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-500" /> Produits sous-évalués (Accès Admin)
+            </h3>
+            <p className="text-sm text-slate-600 mb-4">Tableau complet des niches, marges et coordonnées fournisseurs pour les meilleures opportunités d'achat.</p>
+            <UnderevaluedProductsPanel />
+          </div>
+        </TabsContent>
+
         {/* Activators Tab */}
         <TabsContent value="activators">
           <ActivatorAdminPanel />
