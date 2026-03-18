@@ -4,11 +4,11 @@ import { base44 } from '@/api/base44Client';
 
 // Messages de fallback si l'IA échoue
 const FALLBACK_MESSAGES = [
-  { headline: '💰 Gagnez +25% dès aujourd\'hui', subtitle: '+3,247 membres gagnent déjà. Vendre, acheter ou activer des campagnes sans risque.' },
-  { headline: '🚀 Rejoignez +3K entrepreneurs', subtitle: 'Obtenez des commissions réelles sur vos ventes. Pas d\'engagement, retrait rapide garantis.' },
-  { headline: '💎 Devenez partenaire commercial', subtitle: 'Financer une campagne = Générer des revenus. Jusqu\'à 25% de commissions en 14 jours.' },
-  { headline: '⚡ Opportunité limitée ce mois', subtitle: 'Plus de 1000 activateurs font confiance. Commission garantie, frais transparents.' },
-  { headline: '🎁 Bonus inscription : +1 crédit', subtitle: 'Nouveaux membres reçoivent des crédits gratuits. Commencez votre première vente dès maintenant.' },
+  { headline: '💰 Gagnez +25% dès maintenant', subtitle: '+3K membres actifs · Retrait 24-48h' },
+  { headline: '🚀 Activez une campagne', subtitle: 'Commission réelle sur ventes · Zéro risque' },
+  { headline: '💎 Partenaire commercial', subtitle: 'Jusqu\'à +25% en 14 jours' },
+  { headline: '⚡ Opportunité du mois', subtitle: '1000+ activateurs · Frais transparent' },
+  { headline: '🎁 Crédit offert', subtitle: 'Premiers inscrits · Avantages exclusifs' },
 ];
 
 export default function PromoBanner() {
