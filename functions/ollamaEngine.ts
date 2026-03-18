@@ -170,4 +170,8 @@ Deno.serve(async (req) => {
   }
 
   return Response.json({ error: 'Action non reconnue' }, { status: 400 });
+  } catch (e) {
+    console.error("[ollamaEngine error]", e.message, e.stack);
+    return Response.json({ error: e.message }, { status: 500 });
+  }
 });
