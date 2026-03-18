@@ -167,6 +167,16 @@ export default function OpportunityEngine() {
         </button>
       </div>
 
+      {/* ── Vue Finder ── */}
+      {activeView === 'finder' && (
+        <div className="rounded-2xl p-5" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)' }}>
+          <OpportunityFinder ollamaAvailable={ollamaAvailable} />
+        </div>
+      )}
+
+      {/* ── Vue Produits Sources ── */}
+      {activeView === 'products' && <>
+
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
