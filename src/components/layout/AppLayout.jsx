@@ -49,7 +49,7 @@ export default function AppLayout() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`min-h-screen ${rtl ? 'rtl' : 'ltr'}`} style={{ background: '#060c18' }} dir={rtl ? 'rtl' : 'ltr'}>
+    <div className={`min-h-screen ${rtl ? 'rtl' : 'ltr'}`} style={{ background: '#ffffff' }} dir={rtl ? 'rtl' : 'ltr'}>
 
       {/* Desktop Top Bar */}
       <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 items-center px-6"
