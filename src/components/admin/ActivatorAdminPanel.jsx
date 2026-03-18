@@ -308,7 +308,7 @@ function ParticipationManager({ investments }) {
                   {/* Status selector */}
                   <Select value={inv.status} onValueChange={status => {
                     const profit = editProfit[inv.id] !== undefined ? Number(editProfit[inv.id]) : undefined;
-                    updateStatusMutation.mutate({ id: inv.id, status, actualProfit: profit });
+                    updateStatusMutation.mutate({ id: inv.id, status, actualProfit: profit, investment: inv });
                   }}>
                     <SelectTrigger className="w-36 h-8 text-xs rounded-xl">
                       <SelectValue />
