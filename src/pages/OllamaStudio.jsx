@@ -5,8 +5,9 @@ import {
   Cpu, Zap, ShoppingBag, Megaphone, MessageCircle, TrendingUp, Search,
   CheckCircle, XCircle, AlertTriangle, Loader2, RefreshCw, Settings,
   DollarSign, Shield, ArrowRight, Copy, ChevronDown, ChevronUp,
-  Flame, BarChart3, Globe
+  Flame, BarChart3, Globe, Tag, Package, Sparkles
 } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 
 // ── Coûts estimés ─────────────────────────────────────────────────────────────
