@@ -13,7 +13,7 @@ export default function SectionHeader({ title, icon: Icon, linkTo, iconColor }) 
             <Icon className="w-4 h-4" style={{ color: '#f59e0b' }} />
           </div>
         }
-        <h2 className="text-gray-950 text-lg font-extrabold text-left capitalize md:text-xl" style={{ color: '#e2e8f0' }}>{title}</h2>
+        <h2 className="bg-[#2f2f04] text-gray-950 text-lg font-extrabold text-left capitalize md:text-xl" style={{ color: '#e2e8f0' }}>{title}</h2>
       </div>
       {linkTo &&
       <Link to={linkTo} className="flex items-center gap-1 text-sm font-semibold transition-colors"
