@@ -72,18 +72,18 @@ export default function ActivatorWallet() {
   // Historique combiné (investments + withdrawals)
   const transactions = [
     ...investments.map(inv => ({
-      date: inv.created_date,
-      label: `Activation: ${inv.opportunity_title}`,
-      amount: -inv.amount_invested,
-      color: '#ef4444',
-      type: 'invest',
+    date: inv.created_date,
+    label: `Participation: ${inv.opportunity_title}`,
+    amount: -inv.amount_invested,
+    color: '#ef4444',
+    type: 'invest',
     })),
     ...investments.filter(i => i.status === 'completed').map(inv => ({
-      date: inv.end_date,
-      label: `Gains: ${inv.opportunity_title}`,
-      amount: inv.actual_profit || inv.expected_return_amount,
-      color: '#10b981',
-      type: 'gain',
+    date: inv.end_date,
+    label: `Commission: ${inv.opportunity_title}`,
+    amount: inv.actual_profit || inv.expected_return_amount,
+    color: '#10b981',
+    type: 'gain',
     })),
     ...withdrawals.map(w => ({
       date: w.created_date,
@@ -109,11 +109,11 @@ export default function ActivatorWallet() {
       <div className="grid grid-cols-2 gap-3">
         <Button className="rounded-xl h-12 gap-2 font-bold" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#000' }}
           onClick={() => setShowWithdraw(!showWithdraw)}>
-          <ArrowDownCircle className="w-4 h-4" /> Retirer l'argent
+          <ArrowDownCircle className="w-4 h-4" /> Retirer mes gains
         </Button>
         <Link to="/ActivatorOpportunities" className="block">
           <Button variant="outline" className="w-full rounded-xl h-12 gap-2 border-white/15 text-white">
-            <Plus className="w-4 h-4" /> Investir
+            <Plus className="w-4 h-4" /> Rejoindre une campagne
           </Button>
         </Link>
       </div>
