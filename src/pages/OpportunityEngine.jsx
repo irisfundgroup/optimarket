@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { Zap, Plus, BarChart2, TrendingUp, CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
+import { Zap, Plus, BarChart2, TrendingUp, CheckCircle2, Loader2, RefreshCw, Sparkles, Cpu } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/components/ui/use-toast';
 import ProductSourceForm from '@/components/engine/ProductSourceForm';
 import ProductSourceCard from '@/components/engine/ProductSourceCard';
+import OpportunityFinder from '@/components/engine/OpportunityFinder';
 
 const NICHE_FILTERS = [
   { value: 'all', label: '🌍 Tous' },
