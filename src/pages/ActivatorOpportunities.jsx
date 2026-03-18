@@ -41,7 +41,7 @@ function OppCard({ opp }) {
       <div className="grid grid-cols-3 gap-2 mb-4">
         <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)' }}>
           <p className="text-emerald-400 font-black text-lg">+{margin}%</p>
-          <p className="text-slate-500 text-[10px] mt-0.5">Rendement</p>
+          <p className="text-slate-500 text-[10px] mt-0.5">Commission</p>
         </div>
         <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.04)' }}>
           <p className="text-white font-bold text-sm">{opp.score}/100</p>
@@ -49,7 +49,7 @@ function OppCard({ opp }) {
         </div>
         <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.04)' }}>
           <p className="text-white font-bold text-sm">{opp.claims_count || 0}</p>
-          <p className="text-slate-500 text-[10px] mt-0.5">Activateurs</p>
+          <p className="text-slate-500 text-[10px] mt-0.5">Partenaires</p>
         </div>
       </div>
 
@@ -59,7 +59,7 @@ function OppCard({ opp }) {
 
       <Link to={`/ActivatorActivate?opportunityId=${opp.id}`}>
         <Button className="w-full rounded-xl gap-2 font-bold" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#000' }}>
-          <TrendingUp className="w-4 h-4" /> Activer cette opportunité
+          <TrendingUp className="w-4 h-4" /> Rejoindre cette campagne
         </Button>
       </Link>
     </div>
@@ -86,17 +86,17 @@ export default function ActivatorOpportunities() {
     <div className="max-w-4xl mx-auto px-4 md:px-8 py-6">
       <div className="mb-6">
         <h1 className="text-2xl font-black text-white flex items-center gap-2">
-          <TrendingUp className="w-6 h-6 text-orange-400" /> Opportunités
+          <TrendingUp className="w-6 h-6 text-orange-400" /> Campagnes commerciales
         </h1>
-        <p className="text-slate-400 text-sm mt-1">Investissez et gagnez sans gérer un business</p>
+        <p className="text-slate-400 text-sm mt-1">Rejoignez des campagnes e-commerce et recevez des commissions sur ventes réelles</p>
       </div>
 
       {/* Filtres */}
       <div className="flex gap-2 flex-wrap mb-6">
         {[
           { key: 'all', label: 'Toutes' },
-          { key: 'high_return', label: '🔥 +20% retour' },
-          { key: 'low_risk', label: '🛡️ Faible risque' },
+          { key: 'high_return', label: '🔥 +20% commission' },
+          { key: 'low_risk', label: '🛡️ Score élevé' },
           { key: 'new', label: '✨ Nouvelles' },
         ].map(({ key, label }) => (
           <button key={key} onClick={() => setFilter(key)}
@@ -118,7 +118,7 @@ export default function ActivatorOpportunities() {
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
           <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-20 text-orange-400" />
-          <p className="text-slate-400">Aucune opportunité disponible</p>
+          <p className="text-slate-400">Aucune campagne disponible pour l'instant</p>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
