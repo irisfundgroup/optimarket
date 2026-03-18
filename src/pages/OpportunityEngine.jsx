@@ -33,8 +33,16 @@ export default function OpportunityEngine() {
   const [nicheFilter, setNicheFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [scoringAll, setScoringAll] = useState(false);
+  const [activeView, setActiveView] = useState('finder'); // 'finder' | 'products'
+  const [ollamaAvailable, setOllamaAvailable] = useState(false);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
+
+  useEffect(() => {
+    base44.functions.invoke('ollamaEngine', { action: 'ping', data: {} })
+      .then(res => setOllamaAvailable(res.data?.available || false))
+      .catch(() => {});
+  }, []);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ['productSources'],
