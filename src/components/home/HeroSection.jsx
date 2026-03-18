@@ -38,7 +38,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
               Intelligent
             </span>
           </h1>
-          <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed" style={{ color: '#64748b' }}>
+          <p className="bg-[#000000] mx-auto text-base leading-relaxed md:text-lg max-w-xl" style={{ color: '#64748b' }}>
             Opportunités · Ventes Flash · Marketplace · Géolocalisation
           </p>
         </div>
