@@ -71,11 +71,11 @@ export default function AppLayout() {
             <Link key={item.path} to={item.path}
               className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all relative"
               style={{
-                color: isActive(item.path) ? '#fbbf24' : '#64748b',
+                color: isActive(item.path) ? '#d97706' : '#64748b',
                 background: isActive(item.path) ? 'rgba(245,158,11,0.1)' : 'transparent',
                 border: isActive(item.path) ? '1px solid rgba(245,158,11,0.2)' : '1px solid transparent',
               }}
-              onMouseEnter={e => { if (!isActive(item.path)) { e.currentTarget.style.color = '#e2e8f0'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}}
+              onMouseEnter={e => { if (!isActive(item.path)) { e.currentTarget.style.color = '#1e293b'; e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; }}}
               onMouseLeave={e => { if (!isActive(item.path)) { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.background = 'transparent'; }}}
             >
               <item.icon className="w-4 h-4" />
