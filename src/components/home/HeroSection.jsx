@@ -88,7 +88,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
           { to: '/Opportunities', icon: TrendingUp, label: 'Opportunités', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#6ee7b7' }].
           map((item, i) =>
           <Link key={i} to={item.to}>
-              <div className="bg-zinc-700 px-5 py-2.5 text-sm font-semibold rounded-xl flex items-center gap-2 transition-all"
+              <div className="bg-zinc-700 text-[#da880b] px-5 py-2.5 text-sm font-semibold rounded-xl flex items-center gap-2 transition-all"
             style={{
               background: item.color,
               border: `1px solid ${item.border}`,
