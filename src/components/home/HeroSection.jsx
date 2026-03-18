@@ -27,7 +27,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
         <div className="text-center mb-10">
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4">
-            <span className="bg-slate-950 text-white">Le Marché</span>
+            <span className="text-white">Le Marché</span>
             <br />
             <span style={{
               background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #fcd34d 100%)',
