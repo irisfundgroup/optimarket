@@ -3,8 +3,10 @@ import OpenAI from 'npm:openai';
 
 const openai = new OpenAI({ apiKey: Deno.env.get("OPENAI_API_KEY") });
 
-const OLLAMA_URL = Deno.env.get("OLLAMA_URL") ?? null;
-const DEFAULT_MODEL = Deno.env.get("OLLAMA_MODEL") || "llama3";
+// OLLAMA_URL is optional — if not set, falls back to OpenAI automatically
+const envVars = Deno.env.toObject();
+const OLLAMA_URL = envVars["OLLAMA_URL"] || null;
+const DEFAULT_MODEL = envVars["OLLAMA_MODEL"] || "llama3";
 
 // ── Appel Ollama local ───────────────────────────────────────────────────────
 async function callOllama(prompt, model = DEFAULT_MODEL) {
@@ -69,7 +71,7 @@ Retourne UNIQUEMENT un JSON : { "verdict": "EXCELLENT|BON|MOYEN|RISQUE", "summar
 
   price_optimization: (p) => `Tu es un expert en pricing e-commerce africain. Optimise le prix pour :
 Produit: ${p.name} | Coût total: ${(p.buy_price || 0) + (p.shipping_cost || 0)} | Prix actuel: ${p.sell_price_target} | Marché: ${p.country || "CI"}
-Retourne UNIQUEMENT un JSON : { "optimal_price": nombre, "min_price": nombre, "premium_price": nombre, "rationale": "explication courte", "margin_at_optimal": "X%" }`,
+Retourne UNIQUEMENT un JSON : { "optimal_price": 0, "min_price": 0, "premium_price": 0, "rationale": "explication courte", "margin_at_optimal": "X%" }`,
 
   customer_response: (context) => `Tu es un assistant commercial pour une marketplace africaine. Réponds au client de manière professionnelle et chaleureuse.
 Message client: "${context.message}" | Produit concerné: ${context.product || "non spécifié"} | Langue: ${context.lang || "Français"}
@@ -79,7 +81,7 @@ Retourne UNIQUEMENT un JSON : { "response": "réponse au client", "tone": "ton u
 Produit: ${data.product_name}
 Prix sources: ${JSON.stringify(data.prices)}
 Marché cible: ${data.target_market || "Afrique de l'Ouest"}
-Retourne UNIQUEMENT un JSON : { "best_buy": { "source": "...", "price": 0 }, "best_sell_price": 0, "margin_percent": 0, "arbitrage_viable": true/false, "strategy": "stratégie en 1 phrase" }`,
+Retourne UNIQUEMENT un JSON : { "best_buy": { "source": "...", "price": 0 }, "best_sell_price": 0, "margin_percent": 0, "arbitrage_viable": true, "strategy": "stratégie en 1 phrase" }`,
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -166,5 +168,5 @@ Deno.serve(async (req) => {
     return Response.json({ success: true, result: { response: text }, engine, model: usedModel });
   }
 
-  return Response.json({ error: 'Action non reconnue', available_actions: ["ping","product_sheet","marketing_post","opportunity_analysis","price_optimization","customer_response","detect_arbitrage","free_prompt"] }, { status: 400 });
+  return Response.json({ error: 'Action non reconnue' }, { status: 400 });
 });
