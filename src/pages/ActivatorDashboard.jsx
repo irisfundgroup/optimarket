@@ -46,9 +46,9 @@ export default function ActivatorDashboard() {
     : 100;
 
   const stats = [
-    { label: 'Gains totaux', value: `${totalEarned.toLocaleString()} XOF`, icon: BarChart2, color: '#10b981' },
-    { label: 'Opps actives', value: activeInvs.length, icon: TrendingUp, color: '#f59e0b' },
-    { label: 'Réussies', value: completedInvs.length, icon: Trophy, color: '#a78bfa' },
+    { label: 'Commissions reçues', value: `${totalEarned.toLocaleString()} XOF`, icon: BarChart2, color: '#10b981' },
+    { label: 'Campagnes actives', value: activeInvs.length, icon: TrendingUp, color: '#f59e0b' },
+    { label: 'Complétées', value: completedInvs.length, icon: Trophy, color: '#a78bfa' },
     { label: 'Taux succès', value: investments.length ? `${Math.round((completedInvs.length / investments.length) * 100)}%` : '—', icon: Zap, color: '#38bdf8' },
   ];
 
@@ -66,7 +66,7 @@ export default function ActivatorDashboard() {
         </div>
         <Link to="/ActivatorOpportunities">
           <Button className="rounded-xl gap-2" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff' }}>
-            <Plus className="w-4 h-4" /> Activer
+            <Plus className="w-4 h-4" /> Rejoindre
           </Button>
         </Link>
       </div>
@@ -101,12 +101,12 @@ export default function ActivatorDashboard() {
         </div>
         {nextThreshold && (
           <p className="text-xs text-slate-500 mt-1.5">
-            Encore {(nextThreshold - totalEarned).toLocaleString()} XOF de gains pour passer au niveau suivant
+            Encore {(nextThreshold - totalEarned).toLocaleString()} XOF de commissions pour le niveau suivant
           </p>
         )}
         <div className="mt-3 flex gap-4 text-xs text-slate-400">
-          <span>✅ Frais: {lvlConfig.fees}%</span>
-          <span>✅ Invest. max: {(lvlConfig.maxInvest / 1000).toFixed(0)}K XOF</span>
+          <span>✅ Commission plateforme: {lvlConfig.fees}%</span>
+          <span>✅ Pack max: {(lvlConfig.maxInvest / 1000).toFixed(0)}K XOF</span>
           <span>✅ Retrait/j: {(lvlConfig.maxWithdraw / 1000).toFixed(0)}K XOF</span>
         </div>
       </div>
@@ -114,7 +114,7 @@ export default function ActivatorDashboard() {
       {/* Investissements actifs */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-white font-bold flex items-center gap-2"><TrendingUp className="w-4 h-4 text-orange-400" /> Mes investissements</h2>
+          <h2 className="text-white font-bold flex items-center gap-2"><TrendingUp className="w-4 h-4 text-orange-400" /> Mes participations</h2>
           <Link to="/ActivatorHistory" className="text-xs text-orange-400 flex items-center gap-1">Tout voir <ArrowRight className="w-3 h-3" /></Link>
         </div>
         {loadingInvs ? (
@@ -122,9 +122,9 @@ export default function ActivatorDashboard() {
         ) : investments.length === 0 ? (
           <div className="text-center py-10 rounded-2xl" style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.1)' }}>
             <TrendingUp className="w-10 h-10 mx-auto mb-3 opacity-20 text-orange-400" />
-            <p className="text-slate-400 text-sm">Aucun investissement encore</p>
+            <p className="text-slate-400 text-sm">Aucune participation active pour l'instant</p>
             <Link to="/ActivatorOpportunities">
-              <Button className="mt-4 rounded-xl" size="sm" style={{ background: '#f59e0b', color: '#000' }}>Explorer les opportunités</Button>
+              <Button className="mt-4 rounded-xl" size="sm" style={{ background: '#f59e0b', color: '#000' }}>Voir les campagnes</Button>
             </Link>
           </div>
         ) : (
@@ -136,7 +136,7 @@ export default function ActivatorDashboard() {
       {opportunities.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-white font-bold flex items-center gap-2"><Zap className="w-4 h-4 text-emerald-400" /> Opportunités suggérées</h2>
+            <h2 className="text-white font-bold flex items-center gap-2"><Zap className="w-4 h-4 text-emerald-400" /> Campagnes recommandées</h2>
             <Link to="/ActivatorOpportunities" className="text-xs text-orange-400 flex items-center gap-1">Tout voir <ArrowRight className="w-3 h-3" /></Link>
           </div>
           <div className="grid gap-3">
@@ -150,7 +150,7 @@ export default function ActivatorDashboard() {
                   </div>
                   <div className="text-right">
                     <p className="text-emerald-400 font-bold text-sm">+{opp.potential_margin || 15}%</p>
-                    <Button size="sm" className="mt-1 rounded-lg text-xs h-7" style={{ background: '#f59e0b', color: '#000' }}>Activer</Button>
+                    <Button size="sm" className="mt-1 rounded-lg text-xs h-7" style={{ background: '#f59e0b', color: '#000' }}>Rejoindre</Button>
                   </div>
                 </div>
               </Link>
@@ -162,7 +162,7 @@ export default function ActivatorDashboard() {
       {/* Actions rapides */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: 'Opportunités', to: '/ActivatorOpportunities', icon: TrendingUp, color: '#f59e0b' },
+          { label: 'Campagnes', to: '/ActivatorOpportunities', icon: TrendingUp, color: '#f59e0b' },
           { label: 'Mon Wallet', to: '/ActivatorWallet', icon: Wallet, color: '#10b981' },
           { label: 'Historique', to: '/ActivatorHistory', icon: History, color: '#a78bfa' },
         ].map(({ label, to, icon: Icon, color }) => (
