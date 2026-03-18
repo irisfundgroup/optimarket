@@ -100,6 +100,7 @@ const AuthenticatedApp = () => {
         <Route path="/ActivatorActivate" element={<ActivatorActivate />} />
         <Route path="/ActivatorWallet" element={<ActivatorWallet />} />
         <Route path="/ActivatorHistory" element={<ActivatorHistory />} />
+        <Route path="/OpportunityEngine" element={<OpportunityEngine />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
