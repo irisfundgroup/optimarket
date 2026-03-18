@@ -22,12 +22,12 @@ export default function PromoBanner() {
       setLoading(true);
       try {
         const response = await base44.integrations.Core.InvokeLLM({
-          prompt: `Génère un MESSAGE MARKETING ultra persuasif et concis pour une bannière promotionnelle OptiMarket (plateforme de vente, achat et marketing d'affiliation). 
+          prompt: `Génère un MESSAGE MARKETING ultra concis pour bannière OptiMarket.
           
-          Format STRICT - Répondre UNIQUEMENT en JSON valide:
+          Format JSON STRICTEMENT:
           {
-            "headline": "Emoji + ACCROCHE PRINCIPALE (court, max 60 caractères)",
-            "subtitle": "Bénéfice principal + preuve sociale (max 100 caractères)"
+            "headline": "Emoji + court (max 45 caractères)",
+            "subtitle": "Bénéfice court + preuve (max 60 caractères)"
           }
           
           Critères:
