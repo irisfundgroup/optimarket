@@ -125,9 +125,9 @@ export default function AppLayout() {
           {user?.role === 'admin' && (
             <Link to="/AdminDashboard"
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ml-1"
-              style={{ color: isActive('/AdminDashboard') ? '#fbbf24' : '#64748b' }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#e2e8f0'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = isActive('/AdminDashboard') ? '#fbbf24' : '#64748b'; e.currentTarget.style.background = 'transparent'; }}
+              style={{ color: isActive('/AdminDashboard') ? '#d97706' : '#64748b' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#1e293b'; e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = isActive('/AdminDashboard') ? '#d97706' : '#64748b'; e.currentTarget.style.background = 'transparent'; }}
             >
               <LayoutDashboard className="w-4 h-4" /> Admin
             </Link>
