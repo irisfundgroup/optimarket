@@ -26,7 +26,7 @@ const CGU_SECTIONS = [
   {
     icon: Scale,
     title: "5. Règles des gains et commissions",
-    content: `Les gains des Activateurs sont calculés comme suit : (Montant du pack - Frais de plateforme) × Taux de commission de la campagne. Le taux de commission est indicatif et peut varier en fonction des ventes réelles. Les niveaux (Bronze, Silver, Gold, Platinum, Elite) déterminent les frais de plateforme (de 2% à 0,5%) et les limites de participation. Les commissions ne sont versées qu'après validation par l'équipe OptiMarket et uniquement si la campagne a généré des ventes effectives.`
+    content: `Les gains des Activateurs sont calculés comme suit : (Montant du pack - Frais de plateforme) × Taux de commission de la campagne. Le taux de commission est indicatif et peut varier en fonction des ventes réelles. Les niveaux (Bronze, Silver, Gold, Platinum, Elite) déterminent les frais de plateforme (de 2% à 0,5%) et les limites de participation. Les commissions ne sont versées qu'après validation par l'équipe OptiMarket et uniquement si la campagne a généré des ventes effectives. Les récompenses sont attribuées à titre commercial et ne constituent ni un investissement ni une garantie de gain.`
   },
   {
     icon: AlertTriangle,
