@@ -147,6 +147,23 @@ export default function AdminDashboard() {
         <StatCard icon={CreditCard} label="Revenus" value={`${totalRevenue.toFixed(0)}€`} sub={`${payments.length} paiements`} color="text-emerald-600" bg="bg-emerald-50" />
       </div>
 
+      {/* Moteur d'Opportunités CTA */}
+      <div className="mb-6">
+        <Link to="/OpportunityEngine">
+          <div className="rounded-2xl p-4 flex items-center gap-4 cursor-pointer hover:opacity-90 transition-opacity"
+            style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.12), rgba(16,185,129,0.08))', border: '1px solid rgba(245,158,11,0.3)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,158,11,0.2)' }}>
+              <Cpu className="w-5 h-5 text-orange-400" />
+            </div>
+            <div>
+              <p className="text-white font-bold">Moteur d'Opportunités IA</p>
+              <p className="text-slate-400 text-xs">Ajouter des produits sources · Calculer les scores · Publier automatiquement</p>
+            </div>
+            <Zap className="w-5 h-5 text-orange-400 ml-auto" />
+          </div>
+        </Link>
+      </div>
+
       <Tabs defaultValue="validation" className="space-y-6">
         <TabsList className="bg-slate-100 rounded-xl p-1 flex flex-wrap h-auto gap-1">
           <TabsTrigger value="validation" className="rounded-lg text-xs">
