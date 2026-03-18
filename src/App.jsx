@@ -34,6 +34,11 @@ import LiveScanner from '@/pages/LiveScanner';
 import CGU from '@/pages/CGU';
 import Assistance from '@/pages/Assistance';
 import Referral from '@/pages/Referral';
+import ActivatorDashboard from '@/pages/ActivatorDashboard';
+import ActivatorOpportunities from '@/pages/ActivatorOpportunities';
+import ActivatorActivate from '@/pages/ActivatorActivate';
+import ActivatorWallet from '@/pages/ActivatorWallet';
+import ActivatorHistory from '@/pages/ActivatorHistory';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -89,6 +94,11 @@ const AuthenticatedApp = () => {
         <Route path="/CGU" element={<CGU />} />
         <Route path="/Assistance" element={<Assistance />} />
         <Route path="/Referral" element={<Referral />} />
+        <Route path="/ActivatorDashboard" element={<ActivatorDashboard />} />
+        <Route path="/ActivatorOpportunities" element={<ActivatorOpportunities />} />
+        <Route path="/ActivatorActivate" element={<ActivatorActivate />} />
+        <Route path="/ActivatorWallet" element={<ActivatorWallet />} />
+        <Route path="/ActivatorHistory" element={<ActivatorHistory />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
