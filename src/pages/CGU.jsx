@@ -60,29 +60,34 @@ const FINANCE_SECTIONS = [
   {
     icon: AlertTriangle,
     title: "1. Ce n'est PAS un investissement financier",
-    content: `IMPORTANT : La participation au programme Activateur d'OptiMarket N'EST PAS un investissement financier au sens des réglementations bancaires et financières. OptiMarket n'est pas un établissement financier, une banque, un fonds d'investissement, ni une plateforme de trading. Les packs de participation financent des campagnes commerciales réelles (e-commerce, ventes de produits) et les commissions proviennent exclusivement des bénéfices générés par ces ventes.`,
+    content: `IMPORTANT : La participation au programme Activateur d'OptiMarket N'EST PAS un investissement financier au sens des réglementations bancaires et financières. OptiMarket n'est pas une banque, un fonds d'investissement ni une plateforme de trading. Le fonctionnement est simple : l'Activateur achète un pack pour financer le stock ou la mise en avant d'une campagne commerciale réelle. Les acheteurs finaux achètent les produits. Les commissions de l'Activateur proviennent EXCLUSIVEMENT du chiffre d'affaires généré par ces ventes réelles — jamais de l'argent de nouveaux entrants.`,
     highlight: true,
   },
   {
     icon: AlertTriangle,
     title: "2. Gains non garantis — Risque de perte",
-    content: `Les commissions affichées sont des ESTIMATIONS basées sur les performances passées et les projections de vente. Elles ne constituent en aucun cas une garantie de gain. Si une campagne ne génère pas les ventes escomptées, la commission peut être inférieure au taux indiqué, voire nulle. Dans les cas extrêmes (campagne annulée, force majeure, défaillance du partenaire commercial), le pack de participation peut ne pas être récupérable dans son intégralité. Participez uniquement avec des fonds que vous pouvez vous permettre de perdre.`,
+    content: `Les taux de commission affichés sont des ESTIMATIONS basées sur les projections de vente de la campagne. Ils ne constituent en aucun cas une garantie de gain. Si les acheteurs finaux n'achètent pas suffisamment, la commission réelle sera inférieure au taux indiqué, voire nulle. En cas d'annulation de campagne, de force majeure ou de défaillance du partenaire commercial, le pack peut ne pas être récupérable en intégralité. Participez uniquement avec des fonds que vous êtes prêt à perdre.`,
     highlight: true,
   },
   {
+    icon: Info,
+    title: "3. Comment circule l'argent",
+    content: `Schéma de circulation : (1) L'Activateur dépose un pack de participation → (2) OptiMarket utilise ces fonds pour financer/promouvoir une campagne commerciale → (3) Les acheteurs finaux achètent les produits → (4) Les revenus des ventes génèrent une marge commerciale → (5) Cette marge est redistribuée sous forme de commission à l'Activateur, déduction faite des frais de plateforme. L'argent provient toujours des ventes réelles, jamais des packs des nouveaux Activateurs.`
+  },
+  {
     icon: Banknote,
-    title: "3. Frais de plateforme",
-    content: `OptiMarket perçoit des frais de service sur chaque pack de participation. Ces frais varient selon le niveau de l'Activateur : Bronze : 2,0% · Silver : 1,75% · Gold : 1,5% · Platinum : 1,0% · Elite : 0,5%. Ces frais sont prélevés au moment de la participation et ne sont pas remboursables, même en cas d'annulation de campagne.`
+    title: "4. Frais de plateforme",
+    content: `OptiMarket perçoit des frais de service sur chaque pack de participation. Ces frais varient selon le niveau de l'Activateur : Bronze : 2,0% · Silver : 1,75% · Gold : 1,5% · Platinum : 1,0% · Elite : 0,5%. Ces frais couvrent les coûts opérationnels, logistiques et marketing de la plateforme. Ils sont prélevés au moment de la participation et ne sont pas remboursables.`
   },
   {
     icon: Scale,
-    title: "4. Processus de versement des commissions",
-    content: `Les commissions sont calculées et validées par l'équipe OptiMarket à la clôture de chaque campagne. Le versement est effectué sur le wallet OptiMarket de l'Activateur dans un délai de 3 à 7 jours ouvrables après validation. OptiMarket se réserve le droit de retenir un versement en cas de suspicion de fraude ou de litige en cours.`
+    title: "5. Processus de versement des commissions",
+    content: `Les commissions sont calculées et validées par l'équipe OptiMarket à la clôture de chaque campagne, sur la base des ventes réellement constatées. Le versement est effectué sur le wallet OptiMarket de l'Activateur dans un délai de 3 à 7 jours ouvrables après validation. OptiMarket se réserve le droit de retenir un versement en cas de suspicion de fraude ou de litige en cours.`
   },
   {
     icon: Lock,
-    title: "5. Conformité réglementaire",
-    content: `OptiMarket respecte les législations applicables en matière de commerce électronique et de protection des consommateurs. Le programme Activateur est structuré comme un accord de commission marketing et non comme un produit financier réglementé. Toute utilisation du programme à des fins de blanchiment d'argent ou d'activités illicites entraîne la suspension immédiate du compte et un signalement aux autorités compétentes.`
+    title: "6. Conformité réglementaire",
+    content: `OptiMarket respecte les législations applicables en matière de commerce électronique et de protection des consommateurs. Le programme Activateur est structuré comme un accord de commission marketing (modèle affiliation/co-financement commercial) et non comme un produit financier réglementé. Il est fondamentalement différent d'un système pyramidal car les gains ne dépendent pas du recrutement de nouveaux membres mais des ventes aux acheteurs finaux. Toute utilisation à des fins illicites entraîne la suspension immédiate du compte.`
   },
 ];
 
