@@ -85,8 +85,11 @@ export default function AppLayout() {
         </nav>
 
         <div className="flex items-center gap-1 ml-auto">
+          {/* Activator notification bell */}
+          {isActivator && <ActivatorNotificationBell user={user} />}
+
           {/* Publish CTA */}
-          <Link to="/PublishProduct" className="mr-2">
+          {!isActivator && <Link to="/PublishProduct" className="mr-2">
             <button className="flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-all"
               style={{
                 background: 'linear-gradient(135deg, #f59e0b, #d97706)',
