@@ -435,6 +435,9 @@ export default function ActivatorAdminPanel() {
         </TabsList>
 
         <TabsContent value="volumes">
+          <div className="flex justify-end mb-3">
+            <NotifyCampaignButton opportunities={opportunities} />
+          </div>
           <CampaignVolumes investments={investments} opportunities={opportunities} />
         </TabsContent>
         <TabsContent value="withdrawals">
