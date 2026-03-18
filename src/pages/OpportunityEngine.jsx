@@ -175,7 +175,8 @@ export default function OpportunityEngine() {
       )}
 
       {/* ── Vue Produits Sources ── */}
-      {activeView === 'products' && <>
+      {activeView === 'products' && (
+      <div className="space-y-6">
 
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
