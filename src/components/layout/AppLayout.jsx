@@ -115,7 +115,7 @@ export default function AppLayout() {
               <item.icon className="w-5 h-5" />
               {item.badge && unreadAlerts.length > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] text-white flex items-center justify-center font-black"
-                  style={{ background: '#ef4444', border: '2px solid #060c18' }}>
+                  style={{ background: '#ef4444', border: '2px solid #ffffff' }}>
                   {unreadAlerts.length > 9 ? '9+' : unreadAlerts.length}
                 </span>
               )}
