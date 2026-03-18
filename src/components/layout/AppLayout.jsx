@@ -169,9 +169,10 @@ export default function AppLayout() {
       {mobileMenuOpen && (
         <div className="md:hidden fixed top-14 left-0 right-0 z-40"
           style={{
-            background: 'rgba(6, 12, 24, 0.98)',
+            background: 'rgba(255,255,255,0.99)',
             backdropFilter: 'blur(24px)',
-            borderBottom: '1px solid rgba(245, 158, 11, 0.1)',
+            borderBottom: '1px solid rgba(245, 158, 11, 0.15)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
           }}>
           <div className="p-4 space-y-1">
             {[...NAV_ITEMS, ...SECONDARY_NAV].map(item => (
