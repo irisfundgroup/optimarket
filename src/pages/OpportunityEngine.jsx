@@ -28,7 +28,7 @@ const STATUS_FILTERS = [
 export default function OpportunityEngine() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [showForm, setShowForm] = USA(false);
+  const [showForm, setShowForm] = useState(false);
   const [nicheFilter, setNicheFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [scoringAll, setScoringAll] = useState(false);
