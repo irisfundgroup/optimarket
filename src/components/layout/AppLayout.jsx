@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Briefcase, Zap, Bell, MessageCircle, User, TrendingUp, Menu, X, Plus, LayoutDashboard, Activity } from 'lucide-react';
+import { Home, ShoppingBag, Briefcase, Zap, Bell, MessageCircle, User, TrendingUp, Menu, X, Plus, LayoutDashboard, Activity, Wallet, History } from 'lucide-react';
 import { t, isRTL } from '@/lib/i18n';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -19,6 +19,13 @@ const SECONDARY_NAV = [
   { path: '/Profile', icon: User, labelKey: 'profile' },
 ];
 
+const ACTIVATOR_NAV = [
+  { path: '/Home', icon: Home, labelKey: 'home' },
+  { path: '/ActivatorOpportunities', icon: TrendingUp, labelKey: 'opportunities' },
+  { path: '/ActivatorWallet', icon: Wallet, label: 'Wallet' },
+  { path: '/ActivatorHistory', icon: History, label: 'Gains' },
+];
+
 export default function AppLayout() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -28,6 +35,8 @@ export default function AppLayout() {
     queryKey: ['currentUser'],
     queryFn: () => base44.auth.me(),
   });
+
+  const isActivator = user?.role === 'activator';
 
   const { data: unreadAlerts = [] } = useQuery({
     queryKey: ['unreadAlerts', user?.email],
