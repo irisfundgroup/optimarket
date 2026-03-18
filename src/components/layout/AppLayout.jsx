@@ -54,10 +54,10 @@ export default function AppLayout() {
       {/* Desktop Top Bar */}
       <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 h-16 items-center px-6"
         style={{
-          background: 'rgba(6, 12, 24, 0.92)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(20px)',
-          borderBottom: '1px solid rgba(245, 158, 11, 0.12)',
-          boxShadow: '0 4px 30px rgba(0,0,0,0.5)'
+          borderBottom: '1px solid rgba(245, 158, 11, 0.2)',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.08)'
         }}>
 
         {/* Logo */}
