@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Check, X, Clock, TrendingUp, Wallet, AlertCircle, ChevronDown, ChevronUp, Eye, BarChart2, Users } from 'lucide-react';
+import { Check, X, Clock, TrendingUp, Wallet, AlertCircle, ChevronDown, ChevronUp, BarChart2, Users, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
