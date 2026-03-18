@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { BarChart3, Users, ShoppingBag, Briefcase, CreditCard, Check, X, Zap, TrendingUp, Shield, AlertTriangle, Activity, Settings, Bot, Cpu } from 'lucide-react';
+import { BarChart3, Users, ShoppingBag, Briefcase, CreditCard, Check, X, Zap, TrendingUp, Shield, AlertTriangle, Activity, Settings, Bot, Cpu, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ActivatorAdminPanel from '@/components/admin/ActivatorAdminPanel';
 import { Button } from '@/components/ui/button';
