@@ -85,7 +85,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
           {[
           { to: '/Products', icon: ShoppingBag, label: 'Produits', color: 'rgba(99,102,241,0.15)', border: 'rgba(99,102,241,0.3)', text: '#a5b4fc' },
           { to: '/FlashSales', icon: Zap, label: 'Ventes Flash', color: 'rgba(245,158,11,0.15)', border: 'rgba(245,158,11,0.4)', text: '#fbbf24', glow: true },
-          { to: '/Opportunities', icon: TrendingUp, label: 'Opportunités IA', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#6ee7b7' }].
+          { to: '/Opportunities', icon: TrendingUp, label: 'Opportunités', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)', text: '#6ee7b7' }].
           map((item, i) =>
           <Link key={i} to={item.to}>
               <div className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
