@@ -25,18 +25,6 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
 
       <div className="relative px-4 md:px-8 py-14 md:py-24 max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-6"
-            style={{
-              background: 'rgba(245,158,11,0.1)',
-              border: '1px solid rgba(245,158,11,0.3)',
-            }}>
-            <Sparkles className="w-3.5 h-3.5" style={{ color: '#f59e0b' }} />
-            <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#fbbf24' }}>
-              Intelligence Artificielle · Non-Stop
-            </span>
-          </div>
-
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4">
             <span className="text-white">Le Marché</span>
