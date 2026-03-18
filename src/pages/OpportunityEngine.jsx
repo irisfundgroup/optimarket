@@ -114,21 +114,57 @@ export default function OpportunityEngine() {
           <h1 className="text-2xl font-black text-white flex items-center gap-2">
             <Zap className="w-6 h-6 text-orange-400" /> Moteur d'Opportunités
           </h1>
-          <p className="text-slate-500 text-sm mt-0.5">Analyse produits · Score IA · Publication automatique</p>
+          <div className="flex items-center gap-2 mt-1">
+            <p className="text-slate-500 text-sm">Analyse IA · Score · Publication automatique</p>
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold"
+              style={{ background: ollamaAvailable ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: ollamaAvailable ? '#10b981' : '#fbbf24', border: `1px solid ${ollamaAvailable ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}` }}>
+              {ollamaAvailable ? '🦙 Ollama local' : '✨ OpenAI cloud'}
+            </span>
+          </div>
         </div>
         <div className="flex gap-2">
-          {drafts > 0 && (
+          {activeView === 'products' && drafts > 0 && (
             <Button size="sm" className="rounded-xl gap-1.5 text-sm" style={{ background: 'rgba(245,158,11,0.15)', color: '#f59e0b', border: '1px solid rgba(245,158,11,0.3)' }}
               onClick={handleScoreAll} disabled={scoringAll}>
               {scoringAll ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
               {scoringAll ? 'Scoring...' : `Scorer tous (${drafts})`}
             </Button>
           )}
-          <Button size="sm" className="rounded-xl gap-1.5 text-sm font-bold" style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', color: '#000' }}
-            onClick={() => setShowForm(!showForm)}>
-            <Plus className="w-4 h-4" /> Ajouter produit
-          </Button>
+          {activeView === 'products' && (
+            <Button size="sm" className="rounded-xl gap-1.5 text-sm font-bold" style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', color: '#000' }}
+              onClick={() => setShowForm(!showForm)}>
+              <Plus className="w-4 h-4" /> Ajouter produit
+            </Button>
+          )}
         </div>
+      </div>
+
+      {/* Vue switcher */}
+      <div className="grid grid-cols-2 gap-3">
+        <button onClick={() => setActiveView('finder')}
+          className="flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
+          style={{
+            background: activeView === 'finder' ? 'rgba(245,158,11,0.12)' : 'rgba(255,255,255,0.03)',
+            border: `1px solid ${activeView === 'finder' ? 'rgba(245,158,11,0.4)' : 'rgba(255,255,255,0.07)'}`,
+          }}>
+          <Sparkles className="w-6 h-6 flex-shrink-0" style={{ color: activeView === 'finder' ? '#fbbf24' : '#475569' }} />
+          <div>
+            <p className="text-sm font-bold" style={{ color: activeView === 'finder' ? '#fbbf24' : '#64748b' }}>Trouver une opportunité</p>
+            <p className="text-[10px] text-slate-500">IA hybride · 4 modes</p>
+          </div>
+        </button>
+        <button onClick={() => setActiveView('products')}
+          className="flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
+          style={{
+            background: activeView === 'products' ? 'rgba(99,102,241,0.12)' : 'rgba(255,255,255,0.03)',
+            border: `1px solid ${activeView === 'products' ? 'rgba(99,102,241,0.4)' : 'rgba(255,255,255,0.07)'}`,
+          }}>
+          <Cpu className="w-6 h-6 flex-shrink-0" style={{ color: activeView === 'products' ? '#818cf8' : '#475569' }} />
+          <div>
+            <p className="text-sm font-bold" style={{ color: activeView === 'products' ? '#818cf8' : '#64748b' }}>Produits sources</p>
+            <p className="text-[10px] text-slate-500">{products.length} produits · Score automatique</p>
+          </div>
+        </button>
       </div>
 
       {/* KPIs */}
