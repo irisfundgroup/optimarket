@@ -209,19 +209,25 @@ export default function AppLayout() {
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50"
-        style={{
-          background: 'rgba(6, 12, 24, 0.97)',
-          backdropFilter: 'blur(20px)',
-          borderTop: '1px solid rgba(245, 158, 11, 0.1)',
-        }}>
-        <div className="flex items-center justify-around px-2 h-16">
-          {[
-            { path: '/Home', icon: Home, labelKey: 'home' },
-            { path: '/Products', icon: ShoppingBag, labelKey: 'products' },
-            { path: '/FlashSales', icon: Zap, labelKey: 'flash_sales', highlight: true },
-            { path: '/Messages', icon: MessageCircle, labelKey: 'messages' },
-            { path: '/Profile', icon: User, labelKey: 'profile' },
-          ].map(item => (
+      style={{
+        background: 'rgba(6, 12, 24, 0.97)',
+        backdropFilter: 'blur(20px)',
+        borderTop: '1px solid rgba(245, 158, 11, 0.1)',
+      }}>
+      <div className="flex items-center justify-around px-2 h-16">
+        {(isActivator ? [
+          { path: '/Home', icon: Home, labelKey: 'home' },
+          { path: '/ActivatorOpportunities', icon: TrendingUp, label: 'Opps', highlight: true },
+          { path: '/ActivatorWallet', icon: Wallet, label: 'Wallet' },
+          { path: '/ActivatorHistory', icon: History, label: 'Gains' },
+          { path: '/Profile', icon: User, labelKey: 'profile' },
+        ] : [
+          { path: '/Home', icon: Home, labelKey: 'home' },
+          { path: '/Products', icon: ShoppingBag, labelKey: 'products' },
+          { path: '/FlashSales', icon: Zap, labelKey: 'flash_sales', highlight: true },
+          { path: '/Messages', icon: MessageCircle, labelKey: 'messages' },
+          { path: '/Profile', icon: User, labelKey: 'profile' },
+        ]).map(item => (
             <Link key={item.path} to={item.path}
               className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all">
               {item.highlight ? (
