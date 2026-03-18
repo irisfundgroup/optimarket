@@ -98,7 +98,7 @@ export default function AppLayout() {
               }}>
               <Plus className="w-4 h-4" /> Publier
             </button>
-          </Link>
+          </Link>}
 
           {SECONDARY_NAV.map(item => (
             <Link key={item.path} to={item.path}
