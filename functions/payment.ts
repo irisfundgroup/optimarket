@@ -1,14 +1,23 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.21';
 
 const GENIUSPAY_KEY = Deno.env.get('GENIUSPAY_API_KEY');
-const GENIUSPAY_BASE = 'https://api.geniuspay.ci/v1';
+const GENIUSPAY_SECRET = Deno.env.get('GENIUSPAY_API_SECRET');
+const GENIUSPAY_BASE = 'https://pay.genius.ci/api/v1/merchant';
 
 const PLANS = {
-  single_action: { label: '1 Action', price: 500, currency: 'XOF', credits: 1 },
-  pack_10:       { label: 'Pack 10 crédits', price: 3500, currency: 'XOF', credits: 10 },
-  pass_24h:      { label: 'Pass 24h illimité', price: 2000, currency: 'XOF', credits: 999 },
-  monthly:       { label: 'Abonnement mensuel', price: 9900, currency: 'XOF', credits: 9999 },
+  single_action: { label: '1 Action - OptiMarket', price: 500, currency: 'XOF', credits: 1 },
+  pack_10:       { label: 'Pack 10 crédits - OptiMarket', price: 3500, currency: 'XOF', credits: 10 },
+  pass_24h:      { label: 'Pass 24h illimité - OptiMarket', price: 2000, currency: 'XOF', credits: 999 },
+  monthly:       { label: 'Abonnement mensuel - OptiMarket', price: 9900, currency: 'XOF', credits: 9999 },
 };
+
+function geniusHeaders() {
+  return {
+    'X-API-Key': GENIUSPAY_KEY,
+    ...(GENIUSPAY_SECRET ? { 'X-API-Secret': GENIUSPAY_SECRET } : {}),
+    'Content-Type': 'application/json',
+  };
+}
 
 Deno.serve(async (req) => {
   try {
@@ -26,32 +35,33 @@ Deno.serve(async (req) => {
       if (!planData) return Response.json({ error: 'Plan invalide' }, { status: 400 });
 
       const origin = req.headers.get('origin') || 'https://optimarket.app';
-      const callbackUrl = `${origin}/Subscription?payment_status=success&plan=${plan}`;
-      const cancelUrl = `${origin}/Subscription?payment_status=cancelled`;
+      const successUrl = `${origin}/Subscription?payment_status=success&plan=${plan}`;
+      const errorUrl = `${origin}/Subscription?payment_status=cancelled`;
 
-      const res = await fetch(`${GENIUSPAY_BASE}/payments/create`, {
+      const res = await fetch(`${GENIUSPAY_BASE}/payments`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${GENIUSPAY_KEY}`,
-          'Content-Type': 'application/json',
-        },
+        headers: geniusHeaders(),
         body: JSON.stringify({
           amount: planData.price,
           currency: planData.currency,
           description: planData.label,
-          customer_email: user.email,
-          customer_name: user.full_name || user.email,
-          callback_url: callbackUrl,
-          cancel_url: cancelUrl,
+          customer: {
+            email: user.email,
+            name: user.full_name || user.email,
+          },
+          success_url: successUrl,
+          error_url: errorUrl,
           metadata: { user_email: user.email, plan },
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         return Response.json({ error: data.message || 'Erreur GeniusPay' }, { status: 400 });
       }
+
+      const paymentData = data.data;
 
       // Log pending payment in DB
       await base44.entities.Payment.create({
@@ -61,10 +71,14 @@ Deno.serve(async (req) => {
         type: plan === 'monthly' ? 'subscription' : 'single_action',
         status: 'pending',
         description: planData.label,
-        related_id: data.id || data.payment_id || '',
+        related_id: paymentData.reference || String(paymentData.id || ''),
       });
 
-      return Response.json({ success: true, payment_url: data.payment_url || data.checkout_url, payment_id: data.id || data.payment_id });
+      return Response.json({
+        success: true,
+        payment_url: paymentData.checkout_url || paymentData.payment_url,
+        payment_id: paymentData.reference || paymentData.id,
+      });
     }
 
     // ── 2. Verify payment & activate subscription ─────────────────────────────
@@ -72,11 +86,12 @@ Deno.serve(async (req) => {
       const { payment_id, plan } = body;
 
       const res = await fetch(`${GENIUSPAY_BASE}/payments/${payment_id}`, {
-        headers: { 'Authorization': `Bearer ${GENIUSPAY_KEY}` },
+        headers: geniusHeaders(),
       });
       const data = await res.json();
+      const paymentData = data.data || data;
 
-      const isPaid = data.status === 'completed' || data.status === 'success' || data.status === 'paid';
+      const isPaid = paymentData.status === 'completed' || paymentData.status === 'success' || paymentData.status === 'paid';
 
       if (isPaid) {
         const planData = PLANS[plan];
@@ -103,7 +118,7 @@ Deno.serve(async (req) => {
         }
       }
 
-      return Response.json({ success: true, paid: isPaid, status: data.status });
+      return Response.json({ success: true, paid: isPaid, status: paymentData.status });
     }
 
     // ── 3. Buy product / flash sale via GeniusPay ────────────────────────────
@@ -111,32 +126,34 @@ Deno.serve(async (req) => {
       const { item_type, item_id, item_title, amount, currency } = body;
 
       const origin = req.headers.get('origin') || 'https://optimarket.app';
-      const callbackUrl = `${origin}/${item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail'}?id=${item_id}&payment_status=success`;
-      const cancelUrl = `${origin}/${item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail'}?id=${item_id}&payment_status=cancelled`;
+      const detailPage = item_type === 'flash_sale' ? 'FlashSaleDetail' : 'ProductDetail';
+      const successUrl = `${origin}/${detailPage}?id=${item_id}&payment_status=success`;
+      const errorUrl = `${origin}/${detailPage}?id=${item_id}&payment_status=cancelled`;
 
-      const res = await fetch(`${GENIUSPAY_BASE}/payments/create`, {
+      const res = await fetch(`${GENIUSPAY_BASE}/payments`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${GENIUSPAY_KEY}`,
-          'Content-Type': 'application/json',
-        },
+        headers: geniusHeaders(),
         body: JSON.stringify({
           amount,
           currency: currency || 'XOF',
           description: item_title,
-          customer_email: user.email,
-          customer_name: user.full_name || user.email,
-          callback_url: callbackUrl,
-          cancel_url: cancelUrl,
+          customer: {
+            email: user.email,
+            name: user.full_name || user.email,
+          },
+          success_url: successUrl,
+          error_url: errorUrl,
           metadata: { user_email: user.email, item_type, item_id },
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         return Response.json({ error: data.message || 'Erreur GeniusPay' }, { status: 400 });
       }
+
+      const paymentData = data.data;
 
       await base44.entities.Payment.create({
         user_email: user.email,
@@ -148,7 +165,10 @@ Deno.serve(async (req) => {
         related_id: item_id,
       });
 
-      return Response.json({ success: true, payment_url: data.payment_url || data.checkout_url });
+      return Response.json({
+        success: true,
+        payment_url: paymentData.checkout_url || paymentData.payment_url,
+      });
     }
 
     // ── 4. Register referral on signup ────────────────────────────────────────
@@ -156,7 +176,6 @@ Deno.serve(async (req) => {
       const { ref_code } = body;
       if (!ref_code) return Response.json({ error: 'Code manquant' }, { status: 400 });
 
-      // Find the referrer by code (code = first 6 chars of email prefix + hash)
       const allUsers = await base44.asServiceRole.entities.User.list();
       const referrer = allUsers.find(u => {
         const base = u.email?.split('@')[0]?.replace(/[^a-z0-9]/gi, '').toUpperCase().slice(0, 6) || 'USER';
@@ -168,11 +187,9 @@ Deno.serve(async (req) => {
         return Response.json({ error: 'Code invalide' }, { status: 400 });
       }
 
-      // Avoid duplicate
       const existing = await base44.asServiceRole.entities.Referral.filter({ referrer_email: referrer.email, referred_email: user.email });
       if (existing.length > 0) return Response.json({ success: true, already: true });
 
-      // Create referral record
       await base44.asServiceRole.entities.Referral.create({
         referrer_email: referrer.email,
         referrer_name: referrer.full_name,
@@ -199,7 +216,7 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Grant 1 credit to new user (filleul)
+      // Grant 1 credit to new user
       const newUserSubs = await base44.entities.Subscription.filter({ user_email: user.email, status: 'active' }, '-created_date', 1);
       if (newUserSubs[0]) {
         await base44.entities.Subscription.update(newUserSubs[0].id, {
