@@ -89,16 +89,18 @@ export default function AppLayout() {
           {isActivator && <ActivatorNotificationBell user={user} />}
 
           {/* Publish CTA */}
-          {!isActivator && <Link to="/PublishProduct" className="mr-2">
-            <button className="flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-all"
-              style={{
-                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                color: '#fff',
-                boxShadow: '0 4px 15px rgba(245,158,11,0.3)'
-              }}>
-              <Plus className="w-4 h-4" /> Publier
-            </button>
-          </Link>}
+          {!isActivator && (
+            <Link to="/PublishProduct" className="mr-2">
+              <button className="flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-all"
+                style={{
+                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                  color: '#fff',
+                  boxShadow: '0 4px 15px rgba(245,158,11,0.3)'
+                }}>
+                <Plus className="w-4 h-4" /> Publier
+              </button>
+            </Link>
+          )}
 
           {SECONDARY_NAV.map(item => (
             <Link key={item.path} to={item.path}
