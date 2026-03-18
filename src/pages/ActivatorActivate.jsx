@@ -114,12 +114,14 @@ export default function ActivatorActivate() {
   const paymentStatus = urlParams.get('payment_status');
   const paymentRef = urlParams.get('ref');
 
+  const [activationMode, setActivationMode] = useState(null); // 'own' ou 'resell'
   const [step, setStep] = useState(1);
   const [amount, setAmount] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('platform_now');
   const [confirmed, setConfirmed] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [resellGenerating, setResellGenerating] = useState(false);
 
   const { data: user } = useQuery({ queryKey: ['currentUser'], queryFn: () => base44.auth.me() });
 
