@@ -39,6 +39,7 @@ import ActivatorOpportunities from '@/pages/ActivatorOpportunities';
 import ActivatorActivate from '@/pages/ActivatorActivate';
 import ActivatorWallet from '@/pages/ActivatorWallet';
 import ActivatorHistory from '@/pages/ActivatorHistory';
+import OpportunityEngine from '@/pages/OpportunityEngine';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
