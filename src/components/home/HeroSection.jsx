@@ -23,7 +23,7 @@ export default function HeroSection({ onSearch, searchQuery, setSearchQuery }) {
       <div className="absolute top-0 left-0 right-0 h-px"
       style={{ background: 'linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)' }} />
 
-      <div className="text-[#c47a31] mx-auto px-4 py-14 relative md:px-8 md:py-24 max-w-6xl">
+      <div className="text-[#e9d6c4] mx-auto px-4 py-14 relative md:px-8 md:py-24 max-w-6xl">
         <div className="text-center mb-10">
           {/* Headline */}
           <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tight mb-4">
