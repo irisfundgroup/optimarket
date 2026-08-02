@@ -1,0 +1,112 @@
+{
+  "name": "Service",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "plumbing",
+        "electrical",
+        "cleaning",
+        "moving",
+        "tutoring",
+        "design",
+        "development",
+        "marketing",
+        "consulting",
+        "other"
+      ]
+    },
+    "price_type": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "hourly",
+        "quote"
+      ],
+      "default": "fixed"
+    },
+    "price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "EUR",
+        "USD",
+        "MAD",
+        "XOF"
+      ],
+      "default": "EUR"
+    },
+    "provider_email": {
+      "type": "string"
+    },
+    "provider_name": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone du prestataire"
+    },
+    "whatsapp": {
+      "type": "string",
+      "description": "Num\u00e9ro WhatsApp du prestataire (avec indicatif)"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "location_country": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "reviews_count": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "rejected",
+        "suspended"
+      ],
+      "default": "pending"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "availability": {
+      "type": "string",
+      "enum": [
+        "available",
+        "busy",
+        "offline"
+      ],
+      "default": "available"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ]
+}

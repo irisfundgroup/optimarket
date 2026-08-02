@@ -1,0 +1,141 @@
+{
+  "name": "ProductSource",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nom du produit"
+    },
+    "niche": {
+      "type": "string",
+      "enum": [
+        "electronics",
+        "auto",
+        "beauty",
+        "home",
+        "solar",
+        "viral_tiktok",
+        "other"
+      ],
+      "description": "Niche cibl\u00e9e"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "aliexpress",
+        "alibaba",
+        "jumia",
+        "local_supplier",
+        "other"
+      ],
+      "description": "Source fournisseur"
+    },
+    "buy_price": {
+      "type": "number",
+      "description": "Prix d'achat (\u20ac/XOF)"
+    },
+    "shipping_cost": {
+      "type": "number",
+      "description": "Frais de livraison estim\u00e9s"
+    },
+    "sell_price_target": {
+      "type": "number",
+      "description": "Prix de revente cible"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "XOF",
+        "EUR",
+        "USD",
+        "MAD"
+      ],
+      "default": "XOF"
+    },
+    "country": {
+      "type": "string",
+      "description": "Pays cible"
+    },
+    "demand_score": {
+      "type": "number",
+      "description": "Score demande (0-10)"
+    },
+    "competition_score": {
+      "type": "number",
+      "description": "Score concurrence (0-10, plus bas = moins de concurrence)"
+    },
+    "logistics_risk": {
+      "type": "number",
+      "description": "Risque logistique (0-10)"
+    },
+    "availability": {
+      "type": "string",
+      "enum": [
+        "available",
+        "limited",
+        "out_of_stock"
+      ],
+      "default": "available"
+    },
+    "opportunity_score": {
+      "type": "number",
+      "description": "Score final calcul\u00e9 (0-100)"
+    },
+    "ai_category": {
+      "type": "string",
+      "description": "Cat\u00e9gorie assign\u00e9e par l'IA"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "R\u00e9sum\u00e9 du potentiel par l'IA"
+    },
+    "ai_product_sheet": {
+      "type": "string",
+      "description": "Fiche produit g\u00e9n\u00e9r\u00e9e par OpenAI"
+    },
+    "ai_marketing_angle": {
+      "type": "string",
+      "description": "Angle marketing g\u00e9n\u00e9r\u00e9"
+    },
+    "ai_target_audience": {
+      "type": "string",
+      "description": "Cible recommand\u00e9e"
+    },
+    "supplier_name": {
+      "type": "string",
+      "description": "Nom du fournisseur/contact"
+    },
+    "supplier_email": {
+      "type": "string",
+      "description": "Email du fournisseur"
+    },
+    "supplier_phone": {
+      "type": "string",
+      "description": "T\u00e9l\u00e9phone du fournisseur"
+    },
+    "supplier_whatsapp": {
+      "type": "string",
+      "description": "WhatsApp du fournisseur (avec indicatif)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scored",
+        "published",
+        "rejected"
+      ],
+      "default": "draft"
+    },
+    "published_opportunity_id": {
+      "type": "string",
+      "description": "ID de l'opportunit\u00e9 publi\u00e9e"
+    }
+  },
+  "required": [
+    "name",
+    "niche",
+    "buy_price",
+    "sell_price_target"
+  ]
+}

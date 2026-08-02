@@ -1,0 +1,46 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "EUR"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "subscription",
+        "single_action",
+        "pack",
+        "product_purchase"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "failed",
+        "refunded"
+      ],
+      "default": "pending"
+    },
+    "description": {
+      "type": "string"
+    },
+    "related_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "amount",
+    "type"
+  ]
+}

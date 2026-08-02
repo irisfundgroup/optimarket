@@ -1,0 +1,94 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Product title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Product description"
+    },
+    "price": {
+      "type": "number",
+      "description": "Product price"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "EUR",
+        "USD",
+        "MAD",
+        "XOF"
+      ],
+      "default": "EUR"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "electronics",
+        "fashion",
+        "home",
+        "food",
+        "beauty",
+        "sports",
+        "auto",
+        "other"
+      ]
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Product image URLs"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "location_country": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "rejected",
+        "sold",
+        "expired"
+      ],
+      "default": "pending"
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "seller_name": {
+      "type": "string"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "favorites_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "price",
+    "category"
+  ]
+}

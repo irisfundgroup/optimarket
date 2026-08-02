@@ -1,0 +1,38 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "activator",
+        "user"
+      ],
+      "default": "user"
+    },
+    "user_type": {
+      "type": "string",
+      "enum": [
+        "activator",
+        "client"
+      ],
+      "description": "Type d'utilisateur: activateur d'opportunit\u00e9s ou client final"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_type",
+    "phone",
+    "city",
+    "country"
+  ]
+}

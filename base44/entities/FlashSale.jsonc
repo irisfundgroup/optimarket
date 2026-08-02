@@ -1,0 +1,80 @@
+{
+  "name": "FlashSale",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "original_price": {
+      "type": "number"
+    },
+    "flash_price": {
+      "type": "number"
+    },
+    "discount_percent": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "EUR",
+        "USD",
+        "MAD",
+        "XOF"
+      ],
+      "default": "EUR"
+    },
+    "starts_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ends_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quantity_total": {
+      "type": "number"
+    },
+    "quantity_sold": {
+      "type": "number",
+      "default": 0
+    },
+    "category": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "ended",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "is_auto_generated": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title",
+    "flash_price",
+    "ends_at"
+  ]
+}

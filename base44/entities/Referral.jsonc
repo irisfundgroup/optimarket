@@ -1,0 +1,60 @@
+{
+  "name": "Referral",
+  "type": "object",
+  "properties": {
+    "referrer_email": {
+      "type": "string",
+      "description": "Email du parrain/affili\u00e9"
+    },
+    "referrer_name": {
+      "type": "string"
+    },
+    "referred_email": {
+      "type": "string",
+      "description": "Email du filleul"
+    },
+    "referred_name": {
+      "type": "string"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Code unique du parrain"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "registered",
+        "converted"
+      ],
+      "default": "pending",
+      "description": "pending=lien cliqu\u00e9, registered=inscrit, converted=premier achat"
+    },
+    "reward_credits": {
+      "type": "number",
+      "default": 0,
+      "description": "Cr\u00e9dits gagn\u00e9s gr\u00e2ce \u00e0 ce parrainage"
+    },
+    "commission_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Commission en XOF sur les achats du filleul"
+    },
+    "commission_paid": {
+      "type": "boolean",
+      "default": false
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "referral",
+        "affiliate"
+      ],
+      "default": "referral"
+    }
+  },
+  "required": [
+    "referrer_email",
+    "referral_code"
+  ]
+}

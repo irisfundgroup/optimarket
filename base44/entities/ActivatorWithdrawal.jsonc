@@ -1,0 +1,52 @@
+{
+  "name": "ActivatorWithdrawal",
+  "type": "object",
+  "properties": {
+    "activator_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "XOF"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "mobile_money",
+        "bank_transfer",
+        "card"
+      ],
+      "default": "mobile_money"
+    },
+    "phone_or_account": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "transaction_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "activator_email",
+    "amount"
+  ]
+}

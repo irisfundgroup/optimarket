@@ -1,0 +1,36 @@
+{
+  "name": "Review",
+  "type": "object",
+  "properties": {
+    "reviewer_email": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "target_type": {
+      "type": "string",
+      "enum": [
+        "product",
+        "service",
+        "seller",
+        "provider"
+      ]
+    },
+    "target_id": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number"
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "reviewer_email",
+    "target_type",
+    "target_id",
+    "rating"
+  ]
+}

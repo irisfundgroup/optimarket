@@ -1,0 +1,84 @@
+{
+  "name": "ActivatorInvestment",
+  "type": "object",
+  "properties": {
+    "activator_email": {
+      "type": "string"
+    },
+    "opportunity_id": {
+      "type": "string"
+    },
+    "opportunity_title": {
+      "type": "string"
+    },
+    "amount_invested": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "enum": [
+        "XOF",
+        "EUR",
+        "USD",
+        "MAD"
+      ],
+      "default": "XOF"
+    },
+    "expected_return_percent": {
+      "type": "number"
+    },
+    "expected_return_amount": {
+      "type": "number"
+    },
+    "duration_days": {
+      "type": "number"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actual_profit": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "completed",
+        "failed",
+        "paused"
+      ],
+      "default": "active"
+    },
+    "profit_received": {
+      "type": "boolean",
+      "default": false
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "wallet",
+        "mobile_money",
+        "card"
+      ],
+      "default": "wallet"
+    },
+    "fees_paid": {
+      "type": "number",
+      "default": 0
+    },
+    "product_image": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "activator_email",
+    "opportunity_id",
+    "amount_invested"
+  ]
+}

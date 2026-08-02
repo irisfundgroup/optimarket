@@ -1,0 +1,74 @@
+{
+  "name": "Opportunity",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "product_deal",
+        "service_demand",
+        "flash_sale",
+        "trending",
+        "price_drop"
+      ]
+    },
+    "score": {
+      "type": "number",
+      "description": "AI opportunity score 0-100"
+    },
+    "potential_margin": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "location_country": {
+      "type": "string"
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false
+    },
+    "related_product_id": {
+      "type": "string"
+    },
+    "related_service_id": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "expired",
+        "claimed"
+      ],
+      "default": "active"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "claims_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "score"
+  ]
+}

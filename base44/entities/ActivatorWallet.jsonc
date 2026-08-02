@@ -1,0 +1,47 @@
+{
+  "name": "ActivatorWallet",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "balance_available": {
+      "type": "number",
+      "default": 0
+    },
+    "balance_in_opportunities": {
+      "type": "number",
+      "default": 0
+    },
+    "balance_pending_withdrawal": {
+      "type": "number",
+      "default": 0
+    },
+    "total_earned": {
+      "type": "number",
+      "default": 0
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum",
+        "elite"
+      ],
+      "default": "bronze"
+    },
+    "lifetime_investments": {
+      "type": "number",
+      "default": 0
+    },
+    "success_rate": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "user_email"
+  ]
+}
