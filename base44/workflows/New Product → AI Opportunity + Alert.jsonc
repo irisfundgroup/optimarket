@@ -1,0 +1,37 @@
+{
+  "name": "New Product \u2192 AI Opportunity + Alert",
+  "description": "Quand un nouveau produit est cr\u00e9\u00e9 : l'IA d\u00e9tecte si c'est une opportunit\u00e9 et envoie des alertes aux utilisateurs",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Product"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "new_product_ai_opportunity_alert",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "automations",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "automations"
+  }
+}

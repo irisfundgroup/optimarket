@@ -1,0 +1,46 @@
+{
+  "name": "Market Scanner \u2014 Non-Stop 30min",
+  "description": "Scanne TikTok CI + AliExpress + Amazon toutes les 30 minutes, analyse avec GPT-4o, cr\u00e9e automatiquement opportunit\u00e9s + flash sales + alertes",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "interval",
+      "cron_expression": null,
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": 30,
+      "interval_unit": "minutes",
+      "interval_anchor": "2026-03-17T01:01:45.750000",
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "market_scanner_non_stop_30min",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "marketScanner",
+            "args": {
+              "action": "full_scan"
+            }
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "marketScanner"
+  }
+}
